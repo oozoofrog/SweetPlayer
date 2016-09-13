@@ -1,9 +1,9 @@
-# ffmpeg swift tutorial
+# SweetPlayer 
 
->$ git submodule init<br/>
->$ ./FFmpeg-iOS-build-script/build-ffmpeg.sh
+###2016.09.13
+- moved from [ffmpeg-swift-tutorial](https://github.com/singcodes/ffmpeg-swift-tutorial)
 
-###3016.09.03
+###2016.09.03
 - add MediaData protocol
 - add VideoData: MediaData
 - add AudioData: MediaData

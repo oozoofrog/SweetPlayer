@@ -1,0 +1,8 @@
+module ffmpeg [extern_c] {
+    header "libavformat/avformat.h"
+    header "libavcodec/avcodec.h"
+    header "libavutil/avutil.h"
+    header "libavutil/pixdesc.h"
+
+    export *
+}

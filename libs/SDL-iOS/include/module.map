@@ -1,0 +1,3 @@
+module SDL[extern_c] {
+    export *
+}

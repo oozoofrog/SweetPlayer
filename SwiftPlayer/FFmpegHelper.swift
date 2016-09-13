@@ -63,16 +63,59 @@ extension AVFormatContext {
     }
 }
 
+extension AVCodecContext {
+    var videoSize: CGSize {
+        if 0 < self.width && 0 < self.height {
+            return CGSize(width: Int(self.width), height: Int(self.height))
+        }
+        return CGSize()
+    }
+}
+
+extension AVMediaType: Hashable {
+    public var hashValue: Int {
+        return Int(self.rawValue)
+    }
+}
+
 class SweetFormat {
     var formatContext: UnsafeMutablePointer<AVFormatContext>?
     let path: String
+    private(set) var streams: [AVMediaType: [SweetStream]] = [AVMediaType:[SweetStream]]()
     init?(path: String) {
         self.path = path
         guard av_success_desc(avformat_open_input(&formatContext, path, nil, nil), "open failed -> \(path)") else {
             return nil
         }
+        guard av_success_desc(avformat_find_stream_info(formatContext, nil), "find stream info") else {
+            return nil
+        }
+        if let videos = self.formatContext?.pointee.streamArray(type: AVMEDIA_TYPE_VIDEO).filter({$0.open()}) {
+            self.streams[AVMEDIA_TYPE_VIDEO] = videos
+        }
+        if let audios = self.formatContext?.pointee.streamArray(type: AVMEDIA_TYPE_AUDIO).filter({$0.open()}) {
+            self.streams[AVMEDIA_TYPE_AUDIO] = audios
+        }
+        if 0 == self.streams.count {
+            return nil
+        }
+        if let subtitles = self.formatContext?.pointee.streamArray(type: AVMEDIA_TYPE_SUBTITLE).filter({$0.open()}) {
+            self.streams[AVMEDIA_TYPE_SUBTITLE] = subtitles
+        }
     }
     
+    deinit {
+        avformat_close_input(&formatContext)
+    }
+    
+    var videoSize: CGSize {
+        
+        guard let index = self.streams.index(forKey: AVMEDIA_TYPE_VIDEO), let stream = self.streams[index].value.first else {
+            return CGSize()
+        }
+        
+        return stream.videoSize
+    }
 }
 
 class SweetStream {
@@ -86,6 +129,10 @@ class SweetStream {
     }
     var h: Int32 {
         return codec.pointee.height
+    }
+    
+    var videoSize: CGSize {
+        return CGSize(width: Int(w), height: Int(h))
     }
     
     var fps: Double {

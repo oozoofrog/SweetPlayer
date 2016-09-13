@@ -28,6 +28,7 @@
 		A94A9D6C1D879B360015E441 /* ffmpeg.map in CopyFiles */ = {isa = PBXBuildFile; fileRef = A94A9D551D8799EA0015E441 /* ffmpeg.map */; };
 		A94A9D6F1D879B810015E441 /* sdl.map in CopyFiles */ = {isa = PBXBuildFile; fileRef = A94A9D561D8799EA0015E441 /* sdl.map */; };
 		A94A9D711D879C980015E441 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = A94A9D701D879C980015E441 /* README.md */; };
+		A94A9D731D87B84D0015E441 /* DataContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94A9D721D87B84D0015E441 /* DataContainer.swift */; };
 		A9534E991D77AF6C00411FC9 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9534E981D77AF6C00411FC9 /* Accelerate.framework */; };
 		D81915281D746C0100D919E9 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D81915271D746C0100D919E9 /* CoreMedia.framework */; };
 		D832355F1D7465E5008689D5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D832355E1D7465E5008689D5 /* libz.tbd */; };
@@ -94,6 +95,7 @@
 		A94A9D661D879A7A0015E441 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = libs/openssl/lib/libssl.a; sourceTree = "<group>"; };
 		A94A9D691D879A850015E441 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = "libs/SDL-iOS/lib/libSDL2.a"; sourceTree = "<group>"; };
 		A94A9D701D879C980015E441 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		A94A9D721D87B84D0015E441 /* DataContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataContainer.swift; sourceTree = "<group>"; };
 		A9534E981D77AF6C00411FC9 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		D81915271D746C0100D919E9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		D832355E1D7465E5008689D5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -179,6 +181,19 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		A94A9D741D87BD630015E441 /* Media */ = {
+			isa = PBXGroup;
+			children = (
+				A94A9D721D87B84D0015E441 /* DataContainer.swift */,
+				D848FEAA1D7462F50058E322 /* Player.swift */,
+				A94A9D3F1D8790380015E441 /* FFmpeg.h */,
+				A94A9D401D8790380015E441 /* FFmpeg.m */,
+				A94A9D411D8790380015E441 /* FFmpegHelper.swift */,
+				A94A9D421D8790380015E441 /* MediaHelper.swift */,
+			);
+			name = Media;
+			sourceTree = "<group>";
+		};
 		D848FE6A1D745F4D0058E322 = {
 			isa = PBXGroup;
 			children = (
@@ -200,14 +215,10 @@
 		D848FE751D745F4D0058E322 /* SwiftPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				A94A9D741D87BD630015E441 /* Media */,
 				D848FE761D745F4D0058E322 /* AppDelegate.swift */,
 				A947D64C1D77BF0B00ED6338 /* TableViewController.swift */,
 				D848FE781D745F4D0058E322 /* ViewController.swift */,
-				D848FEAA1D7462F50058E322 /* Player.swift */,
-				A94A9D3F1D8790380015E441 /* FFmpeg.h */,
-				A94A9D401D8790380015E441 /* FFmpeg.m */,
-				A94A9D411D8790380015E441 /* FFmpegHelper.swift */,
-				A94A9D421D8790380015E441 /* MediaHelper.swift */,
 				D848FE7A1D745F4D0058E322 /* Main.storyboard */,
 				D848FE7D1D745F4D0058E322 /* Assets.xcassets */,
 				D848FE7F1D745F4D0058E322 /* LaunchScreen.storyboard */,
@@ -348,6 +359,7 @@
 			files = (
 				A94A9D431D8790380015E441 /* FFmpeg.m in Sources */,
 				A94A9D441D8790380015E441 /* FFmpegHelper.swift in Sources */,
+				A94A9D731D87B84D0015E441 /* DataContainer.swift in Sources */,
 				D848FEAB1D7462F50058E322 /* Player.swift in Sources */,
 				D848FE791D745F4D0058E322 /* ViewController.swift in Sources */,
 				A94A9D451D8790380015E441 /* MediaHelper.swift in Sources */,

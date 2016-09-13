@@ -37,7 +37,6 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        weak var weakSelf = self
         if let path = self.path, 0 < path.lengthOfBytes(using: .utf8) {
             self.player = Player(path: path)
             

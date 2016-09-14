@@ -61,6 +61,7 @@
 		D82F374E1D8978770008FF42 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82F374D1D8978770008FF42 /* Vertex.swift */; };
 		D82F37501D8978B80008FF42 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82F374F1D8978B80008FF42 /* Node.swift */; };
 		D82F37521D897BF00008FF42 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82F37511D897BF00008FF42 /* Triangle.swift */; };
+		D82F37541D897F320008FF42 /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82F37531D897F320008FF42 /* Cube.swift */; };
 		D832355F1D7465E5008689D5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D832355E1D7465E5008689D5 /* libz.tbd */; };
 		D83235611D7465EC008689D5 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D83235601D7465EC008689D5 /* libbz2.tbd */; };
 		D83235631D7465F3008689D5 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D83235621D7465F3008689D5 /* libiconv.tbd */; };
@@ -155,6 +156,7 @@
 		D82F374D1D8978770008FF42 /* Vertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
 		D82F374F1D8978B80008FF42 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		D82F37511D897BF00008FF42 /* Triangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
+		D82F37531D897F320008FF42 /* Cube.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 		D832355E1D7465E5008689D5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D83235601D7465EC008689D5 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		D83235621D7465F3008689D5 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
@@ -279,6 +281,7 @@
 				D82F374D1D8978770008FF42 /* Vertex.swift */,
 				D82F374F1D8978B80008FF42 /* Node.swift */,
 				D82F37511D897BF00008FF42 /* Triangle.swift */,
+				D82F37531D897F320008FF42 /* Cube.swift */,
 				D82223D61D89611300E60EB0 /* AppDelegate.swift */,
 				D82223D81D89611300E60EB0 /* ViewController.swift */,
 				D82223DA1D89611300E60EB0 /* Assets.xcassets */,
@@ -521,6 +524,7 @@
 				D82F374E1D8978770008FF42 /* Vertex.swift in Sources */,
 				D82223E71D89614000E60EB0 /* FFmpegHelper.swift in Sources */,
 				D82223E81D89614000E60EB0 /* MediaHelper.swift in Sources */,
+				D82F37541D897F320008FF42 /* Cube.swift in Sources */,
 				D82223D91D89611300E60EB0 /* ViewController.swift in Sources */,
 				D82F37501D8978B80008FF42 /* Node.swift in Sources */,
 				D82223D71D89611300E60EB0 /* AppDelegate.swift in Sources */,

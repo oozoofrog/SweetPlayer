@@ -11,8 +11,16 @@ import Foundation
 struct Vertex {
     var x, y, z: Float
     var r, g, b, a: Float
-    
+
     var floatBuffer: [Float] {
         return [x, y, z, r, g, b, a]
+    }
+    
+    mutating func scale(_ scale: Float) -> Vertex {
+        self.x *= scale
+        self.y *= scale
+        self.z *= scale
+        
+        return self
     }
 }

@@ -18,7 +18,8 @@ class ViewController: NSViewController {
     var commandQueue: MTLCommandQueue?
     var displayLink: CVDisplayLink?
     
-    var objectToDraw: Triangle?
+    var objectToDraw: Cube?
+    var projectionMatrix: Matrix4?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +34,10 @@ class ViewController: NSViewController {
         
         self.view.layer = self.metalLayer
         
-        objectToDraw = Triangle(device: self.device!)
+        objectToDraw = Cube(device: self.device!, scale: 0.5)
+        objectToDraw?.position = Points(x: 0, y: 0, z: -0.6)
+        objectToDraw?.rotation.z = Matrix4.degrees(toRad: 45)
+        objectToDraw?.scale = 0.5
         
         let library = try! device?.makeDefaultLibrary(bundle: Bundle.main)
         let fragment = library?.makeFunction(name: "basic_fragment")
@@ -47,7 +51,7 @@ class ViewController: NSViewController {
         
         self.commandQueue = device?.makeCommandQueue()
         
-        var ret = CVDisplayLinkCreateWithActiveCGDisplays(&displayLink)
+        let ret = CVDisplayLinkCreateWithActiveCGDisplays(&displayLink)
         guard ret == kCVReturnSuccess else {
             return
         }
@@ -62,11 +66,13 @@ class ViewController: NSViewController {
     }
     
     func render() {
-        self.objectToDraw?.render(commandQueue: self.commandQueue!, pipelineState: self.pipelineState!, drawable: (self.metalLayer?.nextDrawable()!)!, clearColor: MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1))
+        self.objectToDraw?.render(commandQueue: self.commandQueue!, pipelineState: self.pipelineState!, drawable: (self.metalLayer?.nextDrawable()!)!, projectionMatrix: self.projectionMatrix!, clearColor: MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1))
     }
     
     override func viewDidAppear() {
         super.viewDidAppear()
+        
+        self.projectionMatrix = Matrix4.makePerspectiveViewAngle(85.0, aspectRatio: Float(self.view.bounds.width / self.view.bounds.height), nearZ: 0.01, farZ: 100)
         
         CVDisplayLinkStart(self.displayLink!)
     }
@@ -74,6 +80,8 @@ class ViewController: NSViewController {
     override func viewWillLayout() {
         super.viewWillLayout()
         self.view.layer?.frame = self.view.bounds
+        
+        self.projectionMatrix = Matrix4.makePerspectiveViewAngle(85.0, aspectRatio: Float(self.view.bounds.width / self.view.bounds.height), nearZ: 0.01, farZ: 100)
     }
 
     override var representedObject: Any? {

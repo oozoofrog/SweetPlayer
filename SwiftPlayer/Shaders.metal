@@ -19,14 +19,24 @@ struct VertexOut {
     float4 color;
 };
 
+struct Uniforms {
+    float4x4 modelMatrix;
+    float4x4 projectionMatrix;
+};
+
 vertex VertexOut basic_vertex(
                            const device VertexIn* vertex_array [[ buffer(0) ]],
+                              const device Uniforms& uniforms [[ buffer(1) ]],
                            unsigned int vid [[ vertex_id ]]
 ) {
+    
+    float4x4 mv_Matrix = uniforms.modelMatrix;
+    float4x4 proj_Matrix = uniforms.projectionMatrix;
+    
     VertexIn vertexIn = vertex_array[vid];
     
     VertexOut out;
-    out.position = float4(vertexIn.position, 1);
+    out.position = proj_Matrix * mv_Matrix * float4(vertexIn.position, 1);
     out.color = vertexIn.color;
     
     return out;

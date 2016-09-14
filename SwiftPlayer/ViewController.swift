@@ -7,143 +7,74 @@
 //
 
 import UIKit
-import SDL
-import AVFoundation
+import Metal
+import MetalKit
 
 class ViewController: UIViewController {
     
     var path: String? = nil
-    var player: Player? = nil
+    var device: MTLDevice?
+    var metalLayer: CAMetalLayer?
+    var vertexBuffer: MTLBuffer?
+    var pipelineState: MTLRenderPipelineState?
+    var commandQueue: MTLCommandQueue?
     
-    var displayLink: CADisplayLink? = nil
+    var displayLink: CADisplayLink?
     
-    deinit {
-        print("view finished")
-    }
-    
+    let vertexData: [Float] = [0.0, 1.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0, 0.0]
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        let prevIO = UIApplication.shared.statusBarOrientation
-        if UIInterfaceOrientationIsPortrait(prevIO) {
-            UIDevice.current.setValue(UIDeviceOrientation.landscapeLeft.rawValue, forKey: "orientation")
+        
+        guard let device = MTLCreateSystemDefaultDevice() else {
+            return
+        }
+        self.device = device
+        
+        let layer = CAMetalLayer()
+        self.metalLayer = layer
+        self.metalLayer?.device = self.device
+        self.metalLayer?.pixelFormat = .bgra8Unorm
+        self.metalLayer?.framebufferOnly = true
+        self.metalLayer?.frame = self.view.bounds
+        self.view.layer.addSublayer(layer)
+        
+        vertexBuffer = device.makeBuffer(bytes: vertexData, length: vertexData.count * MemoryLayout<Float>.size, options: [])
+        
+        let defaultLibrary = device.newDefaultLibrary()
+        let fragment = defaultLibrary?.makeFunction(name: "basic_fragment")
+        let vertex = defaultLibrary?.makeFunction(name: "basic_shader")
+        
+        let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.fragmentFunction = fragment
+        pipelineDescriptor.vertexFunction = vertex
+        pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+        
+        do {
+            try self.pipelineState = device.makeRenderPipelineState(descriptor: pipelineDescriptor)
+        } catch {
+            print(error.localizedDescription)
+            return
+        }
+        
+        self.commandQueue = device.makeCommandQueue()
+        
+        self.displayLink = CADisplayLink(target: self, selector: #selector(displayRefresh(link:)))
+        self.displayLink?.add(to: RunLoop.main, forMode: .defaultRunLoopMode)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.metalLayer?.frame = self.view.bounds
+    }
+    
+    func displayRefresh(link: CADisplayLink) {
+        autoreleasepool { () -> Void in
+            self.render()
         }
     }
     
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .landscape
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    func render() {
         
-        if let path = self.path, 0 < path.lengthOfBytes(using: .utf8) {
-            self.player = Player(path: path)
-            
-        }
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        print("\(String(describing: self))-\(#function)-\(self.player)")
-        super.viewDidDisappear(animated)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    var start: Double = 0
-    func update(link: CADisplayLink) {
-        if 0 == start {
-            start = link.timestamp
-        }
-        
-    }
-    
-    //MARK: - setupSDL
-    var window: OpaquePointer!
-    var renderer: OpaquePointer!
-    var texture: OpaquePointer!
-    
-    var videoRect: SDL_Rect = SDL_Rect()
-    var dst: SDL_Rect = SDL_Rect()
-    lazy var eventQueue: DispatchQueue? = DispatchQueue(label: "sdl.event.queue")
-    
-    private func setupSDL(player: Player) -> Bool {
-        
-        SDL_SetMainReady()
-        
-        let screenSize = UIScreen.main.bounds.size
-        
-        guard 0 <= SDL_Init(UInt32(SDL_INIT_AUDIO | SDL_INIT_VIDEO)) else {
-            print("SDL_Init: " + String(cString: SDL_GetError()))
-            return false
-        }
-        
-        guard let w = SDL_CreateWindow("SwiftPlayer", 0, 0, Int32(screenSize.width), Int32(screenSize.height), SDL_WINDOW_OPENGL.rawValue | SDL_WINDOW_SHOWN.rawValue | SDL_WINDOW_BORDERLESS.rawValue) else {
-            print("SDL_CreateWindow: " + String(cString: SDL_GetError()))
-            return false
-        }
-        
-        window = w
-        
-        guard let r = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED.rawValue | SDL_RENDERER_TARGETTEXTURE.rawValue) else {
-            print("SDL_CreateRenderer: " + String(cString: SDL_GetError()))
-            return false
-        }
-        
-        renderer = r
-        
-        let videoSize: CGSize = player.videoSize
-        let videoRect: SDL_Rect = SDL_Rect(x: 0, y: 0, w: Int32(videoSize.width), h: Int32(videoSize.height))
-        self.videoRect = videoRect
-        
-        let fitSize = AVMakeRect(aspectRatio: videoSize, insideRect: self.view.window?.bounds ?? CGRect())
-        self.dst.x = Int32(fitSize.origin.x)
-        self.dst.y = Int32(fitSize.origin.y)
-        self.dst.w = Int32(fitSize.width)
-        self.dst.h = Int32(fitSize.height)
-        guard let t = SDL_CreateTexture(renderer, Uint32(SDL_PIXELFORMAT_IYUV), Int32(SDL_TEXTUREACCESS_TARGET.rawValue), videoRect.w, videoRect.h) else {
-            print("SDL_CreateTexture: " + String(cString: SDL_GetError()))
-            return false
-        }
-        
-        texture = t
-        
-        weak var weakSelf = self
-        eventQueue?.async {
-            var event: SDL_Event = SDL_Event()
-            event_loop: while true {
-                SDL_PollEvent(&event)
-                
-                switch event.type {
-                case SDL_FINGERDOWN.rawValue, SDL_QUIT.rawValue:
-                    DispatchQueue.main.async(execute: {
-                        
-                        guard let ws = weakSelf else {
-                            return
-                        }
-                        
-                        ws.player?.cancel()
-                        ws.player = nil
-                        ws.displayLink?.isPaused = true
-                        ws.displayLink?.invalidate()
-                        SDL_DestroyTexture(ws.texture)
-                        SDL_DestroyRenderer(ws.renderer)
-                        SDL_DestroyWindow(ws.window)
-                        SDL_Quit()
-                        
-                        let _ = ws.navigationController?.popViewController(animated: true)
-                    })
-                    break event_loop
-                default:
-                    break
-                }
-            }
-        }
-        
-        return true
     }
 }
 

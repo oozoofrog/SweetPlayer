@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ffmpeg
 import AVFoundation
 import Accelerate
 

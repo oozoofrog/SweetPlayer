@@ -46,6 +46,11 @@
 		D82223FA1D89625300E60EB0 /* libavfilter.6.47.100.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D82223F41D89625300E60EB0 /* libavfilter.6.47.100.dylib */; };
 		D82223FB1D89625300E60EB0 /* libavformat.57.41.100.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D82223F51D89625300E60EB0 /* libavformat.57.41.100.dylib */; };
 		D82223FD1D89625300E60EB0 /* libavutil.55.28.100.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D82223F71D89625300E60EB0 /* libavutil.55.28.100.dylib */; };
+		D82224001D8964BA00E60EB0 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82223FE1D8964BA00E60EB0 /* Metal.framework */; };
+		D82224011D8964BA00E60EB0 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82223FF1D8964BA00E60EB0 /* MetalKit.framework */; };
+		D82224031D8964D300E60EB0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82224021D8964D300E60EB0 /* QuartzCore.framework */; };
+		D82224041D896C4A00E60EB0 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = D82DCF1C1D895354004F0865 /* Shaders.metal */; };
+		D82224061D896E2900E60EB0 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82224051D896E2900E60EB0 /* CoreVideo.framework */; };
 		D82DCF191D89441A004F0865 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82DCF161D89441A004F0865 /* Metal.framework */; };
 		D82DCF1A1D89441A004F0865 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82DCF171D89441A004F0865 /* MetalKit.framework */; };
 		D82DCF1B1D89441A004F0865 /* MetalPerformanceShaders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82DCF181D89441A004F0865 /* MetalPerformanceShaders.framework */; };
@@ -130,10 +135,14 @@
 		D82223F51D89625300E60EB0 /* libavformat.57.41.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavformat.57.41.100.dylib; path = ../../../../../usr/local/Cellar/ffmpeg/3.1.3/lib/libavformat.57.41.100.dylib; sourceTree = "<group>"; };
 		D82223F61D89625300E60EB0 /* libavresample.3.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavresample.3.0.0.dylib; path = ../../../../../usr/local/Cellar/ffmpeg/3.1.3/lib/libavresample.3.0.0.dylib; sourceTree = "<group>"; };
 		D82223F71D89625300E60EB0 /* libavutil.55.28.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavutil.55.28.100.dylib; path = ../../../../../usr/local/Cellar/ffmpeg/3.1.3/lib/libavutil.55.28.100.dylib; sourceTree = "<group>"; };
+		D82223FE1D8964BA00E60EB0 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
+		D82223FF1D8964BA00E60EB0 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/MetalKit.framework; sourceTree = DEVELOPER_DIR; };
+		D82224021D8964D300E60EB0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		D82224051D896E2900E60EB0 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/CoreVideo.framework; sourceTree = DEVELOPER_DIR; };
 		D82DCF161D89441A004F0865 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		D82DCF171D89441A004F0865 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		D82DCF181D89441A004F0865 /* MetalPerformanceShaders.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalPerformanceShaders.framework; path = System/Library/Frameworks/MetalPerformanceShaders.framework; sourceTree = SDKROOT; };
-		D82DCF1C1D895354004F0865 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		D82DCF1C1D895354004F0865 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = Shaders.metal; path = SwiftPlayer/Shaders.metal; sourceTree = "<group>"; };
 		D832355E1D7465E5008689D5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D83235601D7465EC008689D5 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		D83235621D7465F3008689D5 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
@@ -175,6 +184,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D82224061D896E2900E60EB0 /* CoreVideo.framework in Frameworks */,
+				D82224031D8964D300E60EB0 /* QuartzCore.framework in Frameworks */,
+				D82224001D8964BA00E60EB0 /* Metal.framework in Frameworks */,
+				D82224011D8964BA00E60EB0 /* MetalKit.framework in Frameworks */,
 				D82223F81D89625300E60EB0 /* libavcodec.57.48.101.dylib in Frameworks */,
 				D82223FA1D89625300E60EB0 /* libavfilter.6.47.100.dylib in Frameworks */,
 				D82223FB1D89625300E60EB0 /* libavformat.57.41.100.dylib in Frameworks */,
@@ -223,6 +236,7 @@
 		A94A9D541D8799D80015E441 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D82DCF1C1D895354004F0865 /* Shaders.metal */,
 				A94A9D701D879C980015E441 /* README.md */,
 				A94A9D571D8799F10015E441 /* sample.mp4 */,
 				A94A9D551D8799EA0015E441 /* ffmpeg.map */,
@@ -284,7 +298,6 @@
 				D848FE761D745F4D0058E322 /* AppDelegate.swift */,
 				A947D64C1D77BF0B00ED6338 /* TableViewController.swift */,
 				D848FE781D745F4D0058E322 /* ViewController.swift */,
-				D82DCF1C1D895354004F0865 /* Shaders.metal */,
 				D848FE7A1D745F4D0058E322 /* Main.storyboard */,
 				D848FE7D1D745F4D0058E322 /* Assets.xcassets */,
 				D848FE7F1D745F4D0058E322 /* LaunchScreen.storyboard */,
@@ -297,6 +310,10 @@
 		D848FE8E1D745F980058E322 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D82224051D896E2900E60EB0 /* CoreVideo.framework */,
+				D82224021D8964D300E60EB0 /* QuartzCore.framework */,
+				D82223FE1D8964BA00E60EB0 /* Metal.framework */,
+				D82223FF1D8964BA00E60EB0 /* MetalKit.framework */,
 				D82223F21D89625300E60EB0 /* libavcodec.57.48.101.dylib */,
 				D82223F31D89625300E60EB0 /* libavdevice.57.0.101.dylib */,
 				D82223F41D89625300E60EB0 /* libavfilter.6.47.100.dylib */,
@@ -477,6 +494,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D82224041D896C4A00E60EB0 /* Shaders.metal in Sources */,
 				D82223E51D89614000E60EB0 /* Player.swift in Sources */,
 				D82223E61D89614000E60EB0 /* FFmpeg.m in Sources */,
 				D82223E71D89614000E60EB0 /* FFmpegHelper.swift in Sources */,
@@ -742,6 +760,7 @@
 				D82223E11D89611300E60EB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D848FE6E1D745F4D0058E322 /* Build configuration list for PBXProject "SwiftPlayer" */ = {
 			isa = XCConfigurationList;

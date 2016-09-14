@@ -55,6 +55,12 @@
 		D82DCF1A1D89441A004F0865 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82DCF171D89441A004F0865 /* MetalKit.framework */; };
 		D82DCF1B1D89441A004F0865 /* MetalPerformanceShaders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82DCF181D89441A004F0865 /* MetalPerformanceShaders.framework */; };
 		D82DCF1D1D895354004F0865 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = D82DCF1C1D895354004F0865 /* Shaders.metal */; };
+		D82F37491D8977D80008FF42 /* Matrix4.h in Headers */ = {isa = PBXBuildFile; fileRef = D82F37471D8977D80008FF42 /* Matrix4.h */; };
+		D82F374A1D8977D80008FF42 /* Matrix4.m in Sources */ = {isa = PBXBuildFile; fileRef = D82F37481D8977D80008FF42 /* Matrix4.m */; };
+		D82F374C1D8977FA0008FF42 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82F374B1D8977FA0008FF42 /* GLKit.framework */; };
+		D82F374E1D8978770008FF42 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82F374D1D8978770008FF42 /* Vertex.swift */; };
+		D82F37501D8978B80008FF42 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82F374F1D8978B80008FF42 /* Node.swift */; };
+		D82F37521D897BF00008FF42 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82F37511D897BF00008FF42 /* Triangle.swift */; };
 		D832355F1D7465E5008689D5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D832355E1D7465E5008689D5 /* libz.tbd */; };
 		D83235611D7465EC008689D5 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D83235601D7465EC008689D5 /* libbz2.tbd */; };
 		D83235631D7465F3008689D5 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D83235621D7465F3008689D5 /* libiconv.tbd */; };
@@ -143,6 +149,12 @@
 		D82DCF171D89441A004F0865 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		D82DCF181D89441A004F0865 /* MetalPerformanceShaders.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalPerformanceShaders.framework; path = System/Library/Frameworks/MetalPerformanceShaders.framework; sourceTree = SDKROOT; };
 		D82DCF1C1D895354004F0865 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = Shaders.metal; path = SwiftPlayer/Shaders.metal; sourceTree = "<group>"; };
+		D82F37471D8977D80008FF42 /* Matrix4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix4.h; sourceTree = "<group>"; };
+		D82F37481D8977D80008FF42 /* Matrix4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Matrix4.m; sourceTree = "<group>"; };
+		D82F374B1D8977FA0008FF42 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/GLKit.framework; sourceTree = DEVELOPER_DIR; };
+		D82F374D1D8978770008FF42 /* Vertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
+		D82F374F1D8978B80008FF42 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		D82F37511D897BF00008FF42 /* Triangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
 		D832355E1D7465E5008689D5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D83235601D7465EC008689D5 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		D83235621D7465F3008689D5 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
@@ -184,6 +196,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D82F374C1D8977FA0008FF42 /* GLKit.framework in Frameworks */,
 				D82224061D896E2900E60EB0 /* CoreVideo.framework in Frameworks */,
 				D82224031D8964D300E60EB0 /* QuartzCore.framework in Frameworks */,
 				D82224001D8964BA00E60EB0 /* Metal.framework in Frameworks */,
@@ -261,6 +274,11 @@
 		D82223D51D89611300E60EB0 /* SwiftPlayer4macOS */ = {
 			isa = PBXGroup;
 			children = (
+				D82F37471D8977D80008FF42 /* Matrix4.h */,
+				D82F37481D8977D80008FF42 /* Matrix4.m */,
+				D82F374D1D8978770008FF42 /* Vertex.swift */,
+				D82F374F1D8978B80008FF42 /* Node.swift */,
+				D82F37511D897BF00008FF42 /* Triangle.swift */,
 				D82223D61D89611300E60EB0 /* AppDelegate.swift */,
 				D82223D81D89611300E60EB0 /* ViewController.swift */,
 				D82223DA1D89611300E60EB0 /* Assets.xcassets */,
@@ -310,6 +328,7 @@
 		D848FE8E1D745F980058E322 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D82F374B1D8977FA0008FF42 /* GLKit.framework */,
 				D82224051D896E2900E60EB0 /* CoreVideo.framework */,
 				D82224021D8964D300E60EB0 /* QuartzCore.framework */,
 				D82223FE1D8964BA00E60EB0 /* Metal.framework */,
@@ -374,6 +393,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D82F37491D8977D80008FF42 /* Matrix4.h in Headers */,
 				D82223F11D8961DB00E60EB0 /* FFmpeg.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -497,10 +517,14 @@
 				D82224041D896C4A00E60EB0 /* Shaders.metal in Sources */,
 				D82223E51D89614000E60EB0 /* Player.swift in Sources */,
 				D82223E61D89614000E60EB0 /* FFmpeg.m in Sources */,
+				D82F37521D897BF00008FF42 /* Triangle.swift in Sources */,
+				D82F374E1D8978770008FF42 /* Vertex.swift in Sources */,
 				D82223E71D89614000E60EB0 /* FFmpegHelper.swift in Sources */,
 				D82223E81D89614000E60EB0 /* MediaHelper.swift in Sources */,
 				D82223D91D89611300E60EB0 /* ViewController.swift in Sources */,
+				D82F37501D8978B80008FF42 /* Node.swift in Sources */,
 				D82223D71D89611300E60EB0 /* AppDelegate.swift in Sources */,
+				D82F374A1D8977D80008FF42 /* Matrix4.m in Sources */,
 				D82223E41D89614000E60EB0 /* DataContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

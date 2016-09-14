@@ -18,6 +18,8 @@ class ViewController: NSViewController {
     var commandQueue: MTLCommandQueue?
     var displayLink: CVDisplayLink?
     
+    var objectToDraw: Triangle?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,8 +33,7 @@ class ViewController: NSViewController {
         
         self.view.layer = self.metalLayer
         
-        let vertexData: [Float] = [0.0, 1.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0, 0.0]
-        self.buffer = device?.makeBuffer(bytes: vertexData, length: MemoryLayout<Float>.size * vertexData.count, options: [])
+        objectToDraw = Triangle(device: self.device!)
         
         let library = try! device?.makeDefaultLibrary(bundle: Bundle.main)
         let fragment = library?.makeFunction(name: "basic_fragment")
@@ -61,20 +62,7 @@ class ViewController: NSViewController {
     }
     
     func render() {
-        let renderPassDescriptor = MTLRenderPassDescriptor()
-        renderPassDescriptor.colorAttachments[0].texture = self.metalLayer?.nextDrawable()?.texture
-        renderPassDescriptor.colorAttachments[0].loadAction = .clear
-        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 104.0 / 255.0, 5.0 / 255.0, 1.0)
-        
-        let commandBuffer = commandQueue?.makeCommandBuffer()
-        let renderEncoderOpt = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
-        renderEncoderOpt?.setRenderPipelineState(pipelineState!)
-        renderEncoderOpt?.setVertexBuffer(self.buffer, offset: 0, at: 0)
-        renderEncoderOpt?.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3)
-        renderEncoderOpt?.endEncoding()
-        
-        commandBuffer?.present((self.metalLayer?.nextDrawable())!)
-        commandBuffer?.commit()
+        self.objectToDraw?.render(commandQueue: self.commandQueue!, pipelineState: self.pipelineState!, drawable: (self.metalLayer?.nextDrawable()!)!, clearColor: MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1))
     }
     
     override func viewDidAppear() {

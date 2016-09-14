@@ -10,5 +10,6 @@
 #define SwiftPlayer4macOS_Bridging_Header_h
 
 #import "FFmpeg.h"
+#import "Matrix4.h"
 
 #endif /* SwiftPlayer4macOS_Bridging_Header_h */

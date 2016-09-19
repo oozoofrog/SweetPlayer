@@ -29,6 +29,7 @@
 		A94A9D6F1D879B810015E441 /* sdl.map in CopyFiles */ = {isa = PBXBuildFile; fileRef = A94A9D561D8799EA0015E441 /* sdl.map */; };
 		A94A9D711D879C980015E441 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = A94A9D701D879C980015E441 /* README.md */; };
 		A94A9D731D87B84D0015E441 /* DataContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94A9D721D87B84D0015E441 /* DataContainer.swift */; };
+		A950CE101D8F85FF00A858C0 /* MetalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950CE0F1D8F85FF00A858C0 /* MetalViewController.swift */; };
 		A9534E991D77AF6C00411FC9 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9534E981D77AF6C00411FC9 /* Accelerate.framework */; };
 		D81915281D746C0100D919E9 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D81915271D746C0100D919E9 /* CoreMedia.framework */; };
 		D82223D71D89611300E60EB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82223D61D89611300E60EB0 /* AppDelegate.swift */; };
@@ -127,6 +128,7 @@
 		A94A9D691D879A850015E441 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = "libs/SDL-iOS/lib/libSDL2.a"; sourceTree = "<group>"; };
 		A94A9D701D879C980015E441 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A94A9D721D87B84D0015E441 /* DataContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataContainer.swift; sourceTree = "<group>"; };
+		A950CE0F1D8F85FF00A858C0 /* MetalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalViewController.swift; sourceTree = "<group>"; };
 		A9534E981D77AF6C00411FC9 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		D81915271D746C0100D919E9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		D82223D41D89611300E60EB0 /* SwiftPlayer4macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftPlayer4macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -284,6 +286,7 @@
 				D82F37531D897F320008FF42 /* Cube.swift */,
 				D82223D61D89611300E60EB0 /* AppDelegate.swift */,
 				D82223D81D89611300E60EB0 /* ViewController.swift */,
+				A950CE0F1D8F85FF00A858C0 /* MetalViewController.swift */,
 				D82223DA1D89611300E60EB0 /* Assets.xcassets */,
 				D82223DC1D89611300E60EB0 /* Main.storyboard */,
 				D82223DF1D89611300E60EB0 /* Info.plist */,
@@ -529,6 +532,7 @@
 				D82F37501D8978B80008FF42 /* Node.swift in Sources */,
 				D82223D71D89611300E60EB0 /* AppDelegate.swift in Sources */,
 				D82F374A1D8977D80008FF42 /* Matrix4.m in Sources */,
+				A950CE101D8F85FF00A858C0 /* MetalViewController.swift in Sources */,
 				D82223E41D89614000E60EB0 /* DataContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

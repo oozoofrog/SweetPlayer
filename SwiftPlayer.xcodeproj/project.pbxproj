@@ -67,7 +67,7 @@
 		D83235611D7465EC008689D5 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D83235601D7465EC008689D5 /* libbz2.tbd */; };
 		D83235631D7465F3008689D5 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D83235621D7465F3008689D5 /* libiconv.tbd */; };
 		D848FE771D745F4D0058E322 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D848FE761D745F4D0058E322 /* AppDelegate.swift */; };
-		D848FE791D745F4D0058E322 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D848FE781D745F4D0058E322 /* ViewController.swift */; };
+		D848FE791D745F4D0058E322 /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D848FE781D745F4D0058E322 /* SceneViewController.swift */; };
 		D848FE7C1D745F4D0058E322 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D848FE7A1D745F4D0058E322 /* Main.storyboard */; };
 		D848FE7E1D745F4D0058E322 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D848FE7D1D745F4D0058E322 /* Assets.xcassets */; };
 		D848FE811D745F4D0058E322 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D848FE7F1D745F4D0058E322 /* LaunchScreen.storyboard */; };
@@ -164,7 +164,7 @@
 		D83235621D7465F3008689D5 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		D848FE731D745F4D0058E322 /* SwiftPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D848FE761D745F4D0058E322 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D848FE781D745F4D0058E322 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D848FE781D745F4D0058E322 /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
 		D848FE7B1D745F4D0058E322 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D848FE7D1D745F4D0058E322 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D848FE801D745F4D0058E322 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -321,7 +321,7 @@
 				A94A9D741D87BD630015E441 /* Media */,
 				D848FE761D745F4D0058E322 /* AppDelegate.swift */,
 				A947D64C1D77BF0B00ED6338 /* TableViewController.swift */,
-				D848FE781D745F4D0058E322 /* ViewController.swift */,
+				D848FE781D745F4D0058E322 /* SceneViewController.swift */,
 				D848FE7A1D745F4D0058E322 /* Main.storyboard */,
 				D848FE7D1D745F4D0058E322 /* Assets.xcassets */,
 				D848FE7F1D745F4D0058E322 /* LaunchScreen.storyboard */,
@@ -546,7 +546,7 @@
 				A94A9D731D87B84D0015E441 /* DataContainer.swift in Sources */,
 				D848FEAB1D7462F50058E322 /* Player.swift in Sources */,
 				D82DCF1D1D895354004F0865 /* Shaders.metal in Sources */,
-				D848FE791D745F4D0058E322 /* ViewController.swift in Sources */,
+				D848FE791D745F4D0058E322 /* SceneViewController.swift in Sources */,
 				A94A9D451D8790380015E441 /* MediaHelper.swift in Sources */,
 				A947D64D1D77BF0C00ED6338 /* TableViewController.swift in Sources */,
 				A94A9D711D879C980015E441 /* README.md in Sources */,

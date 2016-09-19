@@ -28,7 +28,7 @@ class MetalViewController: NSViewController {
     var commandQueue: MTLCommandQueue! = nil
     var timer: CVDisplayLink? = nil
     var projectionMarix: Matrix4!
-    var lastFrameTimestamp: Int64 = 0
+    var lastFrameTimestamp: CFTimeInterval = 0
     
     weak var delegate: MetalViewControllerDelegate?
     
@@ -76,10 +76,26 @@ class MetalViewController: NSViewController {
     }
     
     func render() {
-        
+        if let drawable = metalLayer.nextDrawable() {
+            self.delegate?.renderObjects(drawable)
+        }
     }
     
     func newFrame(_ displayLink: CVDisplayLink, inTime: CVTimeStamp) {
-        print(Double(inTime.videoTime) / Double(inTime.videoTimeScale))
+        let interval = inTime.timeInterval
+        if 0.0 == self.lastFrameTimestamp {
+            lastFrameTimestamp = interval
+        }
+        let elapsed: CFTimeInterval = interval - lastFrameTimestamp
+        lastFrameTimestamp = interval
+        
+        gameloop(elapsed)
+    }
+    
+    func gameloop(_ timeSinceLastUpdate: CFTimeInterval) {
+        self.delegate?.updateLogic(timeSinceLastUpdate)
+        autoreleasepool {
+            self.render()
+        }
     }
 }

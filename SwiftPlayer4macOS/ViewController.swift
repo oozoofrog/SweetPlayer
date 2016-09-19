@@ -34,10 +34,7 @@ class ViewController: NSViewController {
         
         self.view.layer = self.metalLayer
         
-        objectToDraw = Cube(device: self.device!, scale: 0.5)
-        objectToDraw?.position = Points(x: 0, y: 0, z: -0.6)
-        objectToDraw?.rotation.z = Matrix4.degrees(toRad: 45)
-        objectToDraw?.scale = 0.5
+        objectToDraw = Cube(device: self.device!)
         
         let library = try! device?.makeDefaultLibrary(bundle: Bundle.main)
         let fragment = library?.makeFunction(name: "basic_fragment")
@@ -57,16 +54,29 @@ class ViewController: NSViewController {
         }
         if let link = self.displayLink {
             CVDisplayLinkSetOutputHandler(link, { (link, inNow, inOutput, flagsIn, flagsOut) -> CVReturn in
+                var timestamp = CVTimeStamp()
+                CVDisplayLinkGetCurrentTime(link, &timestamp)
+                if 0 == self.lastFrameTimestamp {
+                    self.lastFrameTimestamp = timestamp.videoTime
+                }
+                let elapsed: Int64 = timestamp.videoTime - self.lastFrameTimestamp
+                self.lastFrameTimestamp = timestamp.videoTime
+                self.objectToDraw?.update(withDelta: Double(elapsed) / 100000.0)
                 autoreleasepool(invoking: { () -> Void in
                     self.render()
                 })
+                
                 return kCVReturnSuccess
             })
         }
     }
+    var lastFrameTimestamp: Int64 = 0
     
     func render() {
-        self.objectToDraw?.render(commandQueue: self.commandQueue!, pipelineState: self.pipelineState!, drawable: (self.metalLayer?.nextDrawable()!)!, projectionMatrix: self.projectionMatrix!, clearColor: MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1))
+        let worldModelMatrix = Matrix4()
+        worldModelMatrix?.translate(0, y: 0, z: -7)
+        worldModelMatrix?.rotateAroundX(Matrix4.degrees(toRad: 25), y: 0, z: 0)
+        self.objectToDraw?.render(commandQueue: self.commandQueue!, pipelineState: self.pipelineState!, drawable: (self.metalLayer?.nextDrawable()!)!, parentModelViewMatrix: worldModelMatrix!, projectionMatrix: self.projectionMatrix!, clearColor: MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1))
     }
     
     override func viewDidAppear() {
@@ -81,7 +91,7 @@ class ViewController: NSViewController {
         super.viewWillLayout()
         self.view.layer?.frame = self.view.bounds
         
-        self.projectionMatrix = Matrix4.makePerspectiveViewAngle(85.0, aspectRatio: Float(self.view.bounds.width / self.view.bounds.height), nearZ: 0.01, farZ: 100)
+        self.projectionMatrix = Matrix4.makePerspectiveViewAngle(45.0, aspectRatio: Float(self.view.bounds.width / self.view.bounds.height), nearZ: 0.01, farZ: 1000)
     }
 
     override var representedObject: Any? {
@@ -89,7 +99,5 @@ class ViewController: NSViewController {
         // Update the view, if already loaded.
         }
     }
-
-    
 }
 

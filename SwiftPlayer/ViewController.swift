@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         
         let defaultLibrary = device.newDefaultLibrary()
         let fragment = defaultLibrary?.makeFunction(name: "basic_fragment")
-        let vertex = defaultLibrary?.makeFunction(name: "basic_shader")
+        let vertex = defaultLibrary?.makeFunction(name: "basic_vertex")
         
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.fragmentFunction = fragment

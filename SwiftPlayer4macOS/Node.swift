@@ -39,7 +39,7 @@ class Node {
         self.device = device
     }
     
-    func render(commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, projectionMatrix projection: Matrix4, clearColor: MTLClearColor?) {
+    func render(commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, parentModelViewMatrix: Matrix4, projectionMatrix projection: Matrix4, clearColor: MTLClearColor?) {
         
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].clearColor = clearColor ?? MTLClearColor(red: 0, green: 104 / 255.0, blue: 5 / 255.0, alpha: 1.0)
@@ -52,7 +52,9 @@ class Node {
         let renderEncoderOpt = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
         renderEncoderOpt.setRenderPipelineState(pipelineState)
         renderEncoderOpt.setVertexBuffer(self.vertexBuffer, offset: 0, at: 0)
+        renderEncoderOpt.setCullMode(.front)
         let nodeModelMatrix = self.modelMatrix
+        nodeModelMatrix.multiplyLeft(parentModelViewMatrix)
         uniformBuffer = device.makeBuffer(length: MemoryLayout<Float>.size * Matrix4.numberOfElements() * 2, options: [])
         
         let bufferPointer = uniformBuffer?.contents()
@@ -72,5 +74,10 @@ class Node {
         matrix?.rotateAroundX(self.rotation.x, y: self.rotation.y, z: self.rotation.z)
         matrix?.scale(scale, y: scale, z: scale)
         return matrix!
+    }
+    
+    var time: CFTimeInterval = 0.0
+    func update(withDelta delta: CFTimeInterval) {
+        time += delta
     }
 }

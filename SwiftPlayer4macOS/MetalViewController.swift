@@ -21,18 +21,18 @@ protocol MetalViewControllerDelegate: class {
     func renderObjects(_ drawable: CAMetalDrawable)
 }
 
-class MetalViewController: NSViewController {
+public class MetalViewController: NSViewController {
     var device: MTLDevice! = nil
     var metalLayer: CAMetalLayer! = nil
     var pipelineState: MTLRenderPipelineState! = nil
     var commandQueue: MTLCommandQueue! = nil
     var timer: CVDisplayLink? = nil
-    var projectionMarix: Matrix4!
+    public var projectionMarix: Matrix4!
     var lastFrameTimestamp: CFTimeInterval = 0
     
     weak var delegate: MetalViewControllerDelegate?
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         projectionMarix = Matrix4.makePerspectiveViewAngle(Matrix4.degrees(toRad: 45.0), aspectRatio: Float(self.view.bounds.width / self.view.bounds.height), nearZ: 0.01, farZ: 100)

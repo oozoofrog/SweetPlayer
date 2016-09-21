@@ -66,6 +66,7 @@
 		D832355F1D7465E5008689D5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D832355E1D7465E5008689D5 /* libz.tbd */; };
 		D83235611D7465EC008689D5 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D83235601D7465EC008689D5 /* libbz2.tbd */; };
 		D83235631D7465F3008689D5 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D83235621D7465F3008689D5 /* libiconv.tbd */; };
+		D83DA6001D92B54F0079D86C /* BufferProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83DA5FF1D92B54F0079D86C /* BufferProvider.swift */; };
 		D848FE771D745F4D0058E322 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D848FE761D745F4D0058E322 /* AppDelegate.swift */; };
 		D848FE791D745F4D0058E322 /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D848FE781D745F4D0058E322 /* SceneViewController.swift */; };
 		D848FE7C1D745F4D0058E322 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D848FE7A1D745F4D0058E322 /* Main.storyboard */; };
@@ -162,6 +163,7 @@
 		D832355E1D7465E5008689D5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D83235601D7465EC008689D5 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		D83235621D7465F3008689D5 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		D83DA5FF1D92B54F0079D86C /* BufferProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BufferProvider.swift; sourceTree = "<group>"; };
 		D848FE731D745F4D0058E322 /* SwiftPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D848FE761D745F4D0058E322 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D848FE781D745F4D0058E322 /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 				D82F374F1D8978B80008FF42 /* Node.swift */,
 				D82F37511D897BF00008FF42 /* Triangle.swift */,
 				D82F37531D897F320008FF42 /* Cube.swift */,
+				D83DA5FF1D92B54F0079D86C /* BufferProvider.swift */,
 				D82223D61D89611300E60EB0 /* AppDelegate.swift */,
 				D82223D81D89611300E60EB0 /* ViewController.swift */,
 				A950CE0F1D8F85FF00A858C0 /* MetalViewController.swift */,
@@ -525,6 +528,7 @@
 				D82223E61D89614000E60EB0 /* FFmpeg.m in Sources */,
 				D82F37521D897BF00008FF42 /* Triangle.swift in Sources */,
 				D82F374E1D8978770008FF42 /* Vertex.swift in Sources */,
+				D83DA6001D92B54F0079D86C /* BufferProvider.swift in Sources */,
 				D82223E71D89614000E60EB0 /* FFmpegHelper.swift in Sources */,
 				D82223E81D89614000E60EB0 /* MediaHelper.swift in Sources */,
 				D82F37541D897F320008FF42 /* Cube.swift in Sources */,

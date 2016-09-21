@@ -24,6 +24,7 @@ class Node {
     let vertexBuffer: MTLBuffer
     var uniformBuffer: MTLBuffer?
     let device: MTLDevice
+    var bufferProvider: BufferProvider
     
     var position: Points = Points()
     var rotation: Points = Points()
@@ -37,6 +38,7 @@ class Node {
         vertexBuffer = device.makeBuffer(bytes: vertexData, length: MemoryLayout<Float>.size * vertexData.count, options: [])
         self.name = name
         self.device = device
+        self.bufferProvider = BufferProvider(device: device, inflightBuffersCount: 3, sizeOfUniformsBuffer: MemoryLayout<Float>.size * Matrix4.numberOfElements() * 2)
     }
     
     func render(commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, parentModelViewMatrix: Matrix4, projectionMatrix projection: Matrix4, clearColor: MTLClearColor?) {
@@ -55,11 +57,7 @@ class Node {
         renderEncoderOpt.setCullMode(.front)
         let nodeModelMatrix = self.modelMatrix
         nodeModelMatrix.multiplyLeft(parentModelViewMatrix)
-        uniformBuffer = device.makeBuffer(length: MemoryLayout<Float>.size * Matrix4.numberOfElements() * 2, options: [])
-        
-        let bufferPointer = uniformBuffer?.contents()
-        cblas_scopy(Int32(Matrix4.numberOfElements()), nodeModelMatrix.raw().assumingMemoryBound(to: Float.self), 1, bufferPointer?.assumingMemoryBound(to: Float.self), 1)
-        cblas_scopy(Int32(Matrix4.numberOfElements()), projection.raw().assumingMemoryBound(to: Float.self), 1, bufferPointer?.assumingMemoryBound(to: Float.self).advanced(by: Matrix4.numberOfElements()), 1)
+        uniformBuffer = bufferProvider.nextUniformsBuffer(projectionMatrix: projection, modelViewMatrix: nodeModelMatrix)
         renderEncoderOpt.setVertexBuffer(uniformBuffer!, offset: 0, at: 1)
         renderEncoderOpt.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertexCount, instanceCount: vertexCount / 3)
         renderEncoderOpt.endEncoding()

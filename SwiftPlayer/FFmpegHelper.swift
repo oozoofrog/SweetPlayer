@@ -10,7 +10,7 @@ import Foundation
 import AVFoundation
 
 extension AVFrame {
-    mutating func videoData(time_base: AVRational) -> VideoData? {
+    mutating func videoData(_ time_base: AVRational) -> VideoData? {
         
         if 0 < self.width && 0 < self.height {
             
@@ -44,14 +44,14 @@ extension AVFrame {
         })
     }
     
-    mutating func audioData(time_base: AVRational) -> AudioData? {
+    mutating func audioData(_ time_base: AVRational) -> AudioData? {
         let format = MediaHelper.audioDefaultFormat
         return AudioData(data: Data(bytes: self.data.0!, count: Int(linesize.0)), format: format, bufferSize: Int(linesize.0), sampleSize: Int(nb_samples), pts: av_frame_get_best_effort_timestamp(&self), dur: self.pkt_duration, time_base: time_base)
     }
 }
 
 extension AVFormatContext {
-    mutating func streamArray(type: AVMediaType) -> [SweetStream] {
+    mutating func streamArray(_ type: AVMediaType) -> [SweetStream] {
         var streams: [SweetStream] = []
         for i in 0..<Int32(self.nb_streams) {
             guard let s = SweetStream(format: &self, type: type, index: i) else {
@@ -81,7 +81,7 @@ extension AVMediaType: Hashable {
 class SweetFormat {
     var formatContext: UnsafeMutablePointer<AVFormatContext>?
     let path: String
-    private(set) var streams: [AVMediaType: [SweetStream]] = [AVMediaType:[SweetStream]]()
+    fileprivate(set) var streams: [AVMediaType: [SweetStream]] = [AVMediaType:[SweetStream]]()
     init?(path: String) {
         self.path = path
         guard av_success_desc(avformat_open_input(&formatContext, path, nil, nil), "open failed -> \(path)") else {
@@ -90,16 +90,16 @@ class SweetFormat {
         guard av_success_desc(avformat_find_stream_info(formatContext, nil), "find stream info") else {
             return nil
         }
-        if let videos = self.formatContext?.pointee.streamArray(type: AVMEDIA_TYPE_VIDEO).filter({$0.open()}) {
+        if let videos = self.formatContext?.pointee.streamArray(AVMEDIA_TYPE_VIDEO).filter({$0.open()}) {
             self.streams[AVMEDIA_TYPE_VIDEO] = videos
         }
-        if let audios = self.formatContext?.pointee.streamArray(type: AVMEDIA_TYPE_AUDIO).filter({$0.open()}) {
+        if let audios = self.formatContext?.pointee.streamArray(AVMEDIA_TYPE_AUDIO).filter({$0.open()}) {
             self.streams[AVMEDIA_TYPE_AUDIO] = audios
         }
         if 0 == self.streams.count {
             return nil
         }
-        if let subtitles = self.formatContext?.pointee.streamArray(type: AVMEDIA_TYPE_SUBTITLE).filter({$0.open()}) {
+        if let subtitles = self.formatContext?.pointee.streamArray(AVMEDIA_TYPE_SUBTITLE).filter({$0.open()}) {
             self.streams[AVMEDIA_TYPE_SUBTITLE] = subtitles
         }
     }
@@ -196,7 +196,7 @@ class SweetStream {
         case pass
     }
     
-    func decode(pkt: UnsafeMutablePointer<AVPacket>, frame: UnsafeMutablePointer<AVFrame>) -> SweetDecodeResult{
+    func decode(_ pkt: UnsafeMutablePointer<AVPacket>, frame: UnsafeMutablePointer<AVFrame>) -> SweetDecodeResult{
         
         var ret = avcodec_send_packet(self.codec, pkt)
         if 0 > ret && ret != AVERROR_CONVERT(EAGAIN) && false == IS_AVERROR_EOF(ret){
@@ -227,7 +227,7 @@ class SweetStream {
     
     var filter: AVFilterHelper? = nil
     func setupFilter(
-        outSampleRate: Int32,
+        _ outSampleRate: Int32,
         outSampleFmt: AVSampleFormat,
         outChannels: Int32) -> Bool{
         

@@ -41,7 +41,7 @@ class MediaHelper {
         return true
     }
     
-    func audioPlay(data: AudioData) {
+    func audioPlay(_ data: AudioData) {
         self.player?.scheduleBuffer(data.pcmBuffer, completionHandler:nil)
     }
     

@@ -21,18 +21,18 @@ protocol MetalViewControllerDelegate: class {
     func renderObjects(_ drawable: CAMetalDrawable)
 }
 
-public class MetalViewController: NSViewController {
+open class MetalViewController: NSViewController {
     var device: MTLDevice! = nil
     var metalLayer: CAMetalLayer! = nil
     var pipelineState: MTLRenderPipelineState! = nil
     var commandQueue: MTLCommandQueue! = nil
     var timer: CVDisplayLink? = nil
-    public var projectionMarix: Matrix4!
+    open var projectionMarix: Matrix4!
     var lastFrameTimestamp: CFTimeInterval = 0
     
     weak var delegate: MetalViewControllerDelegate?
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
         projectionMarix = Matrix4.makePerspectiveViewAngle(Matrix4.degrees(toRad: 45.0), aspectRatio: Float(self.view.bounds.width / self.view.bounds.height), nearZ: 0.01, farZ: 100)
@@ -42,7 +42,6 @@ public class MetalViewController: NSViewController {
         metalLayer.device = self.device
         metalLayer.pixelFormat = .bgra8Unorm
         metalLayer.framebufferOnly = true
-        metalLayer.frame = view.bounds
         self.view.layer = metalLayer
         
         self.commandQueue = device.makeCommandQueue()
@@ -73,6 +72,17 @@ public class MetalViewController: NSViewController {
         })
         
         CVDisplayLinkStart(self.timer!)
+    }
+    
+    open override func viewWillLayout() {
+        super.viewWillLayout()
+        if let window = view.window {
+            let scale = window.screen?.backingScaleFactor ?? 0.0
+            let layerSize = self.view.bounds.size
+            metalLayer.frame = self.view.bounds
+            metalLayer.drawableSize = layerSize.applying(CGAffineTransform(scaleX: scale, y: scale))
+        }
+        projectionMarix = Matrix4.makePerspectiveViewAngle(Matrix4.degrees(toRad: 45.0), aspectRatio: Float(self.view.bounds.width / self.view.bounds.height), nearZ: 0.01, farZ: 100)
     }
     
     func render() {

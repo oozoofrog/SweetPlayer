@@ -9,11 +9,11 @@
 import Foundation
 import Metal
 
-public class BufferProvider: NSObject {
+open class BufferProvider: NSObject {
     
     let inflightBuffersCount: Int
-    private var uniformBuffers: [MTLBuffer]
-    private var availableBufferIndex: Int = 0
+    fileprivate var uniformBuffers: [MTLBuffer]
+    fileprivate var availableBufferIndex: Int = 0
     
     init(device: MTLDevice, inflightBuffersCount: Int, sizeOfUniformsBuffer: Int) {
         self.inflightBuffersCount = inflightBuffersCount
@@ -24,7 +24,7 @@ public class BufferProvider: NSObject {
         }
     }
     
-    func nextUniformsBuffer(projectionMatrix: Matrix4, modelViewMatrix: Matrix4) -> MTLBuffer {
+    func nextUniformsBuffer(_ projectionMatrix: Matrix4, modelViewMatrix: Matrix4) -> MTLBuffer {
         let buffer = uniformBuffers[availableBufferIndex]
         let bufferPointer = buffer.contents()
         

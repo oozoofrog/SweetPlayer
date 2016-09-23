@@ -10,27 +10,36 @@ import Foundation
 import AVFoundation
 
 extension AVFrame {
-    mutating func videoData(_ time_base: AVRational) -> VideoData? {
+    mutating func videoData(_ time_base: AVRational, isRGB24: Bool = false) -> VideoData? {
         
         if 0 < self.width && 0 < self.height {
             
-            guard let ybuf = self.data.0 else {
-                return nil
-            }
-            
-            let lumaSize = Int(self.linesize.0 * self.height)
-            let chromaSize = Int(self.linesize.1 * self.height / 2)
-            let y = Data(bytes: ybuf, count: lumaSize)
-            guard let ubuf = self.data.1 else {
-                return nil
-            }
-            let u = Data(bytes: ubuf, count: chromaSize)
-            guard let vbuf = self.data.2 else {
-                return nil
-            }
-            let v = Data(bytes: vbuf, count: chromaSize)
             let pts = av_frame_get_best_effort_timestamp(&self)
-            return VideoData(y: y, u: u, v: v, lumaLength: self.linesize.0, chromaLength: self.linesize.1, w: self.width, h: self.height, pts: pts, dur: self.pkt_duration, time_base: time_base)
+            if isRGB24 {
+                guard let rgbBuf = self.data.0 else {
+                    return nil
+                }
+                let size = Int(self.linesize.0 * self.height)
+                let rgb = Data(bytes: rgbBuf, count: size)
+                return VideoData(y: rgb, u: Data(), v: Data(), lumaLength: self.linesize.0, chromaLength: 0, w: self.width, h: self.height, pts: pts, dur: self.pkt_duration, time_base: time_base)
+            } else {
+                guard let ybuf = self.data.0 else {
+                    return nil
+                }
+                
+                let lumaSize = Int(self.linesize.0 * self.height)
+                let chromaSize = Int(self.linesize.1 * self.height / 2)
+                let y = Data(bytes: ybuf, count: lumaSize)
+                guard let ubuf = self.data.1 else {
+                    return nil
+                }
+                let u = Data(bytes: ubuf, count: chromaSize)
+                guard let vbuf = self.data.2 else {
+                    return nil
+                }
+                let v = Data(bytes: vbuf, count: chromaSize)
+                return VideoData(y: y, u: u, v: v, lumaLength: self.linesize.0, chromaLength: self.linesize.1, w: self.width, h: self.height, pts: pts, dur: self.pkt_duration, time_base: time_base)
+            }
         }
         
         return nil
@@ -54,7 +63,7 @@ extension AVFormatContext {
     mutating func streamArray(_ type: AVMediaType) -> [SweetStream] {
         var streams: [SweetStream] = []
         for i in 0..<Int32(self.nb_streams) {
-            guard let s = SweetStream(format: &self, type: type, index: i) else {
+            guard let s = SweetStream(format: &self, type: type, index: i), s.open() else {
                 continue
             }
             streams.append(s)
@@ -81,7 +90,8 @@ extension AVMediaType: Hashable {
 class SweetFormat {
     var formatContext: UnsafeMutablePointer<AVFormatContext>?
     let path: String
-    fileprivate(set) var streams: [AVMediaType: [SweetStream]] = [AVMediaType:[SweetStream]]()
+    fileprivate(set) var streamsByType: [AVMediaType: [SweetStream]] = [AVMediaType:[SweetStream]]()
+    fileprivate(set) var streams: [SweetStream] = []
     init?(path: String) {
         self.path = path
         guard av_success_desc(avformat_open_input(&formatContext, path, nil, nil), "open failed -> \(path)") else {
@@ -90,18 +100,23 @@ class SweetFormat {
         guard av_success_desc(avformat_find_stream_info(formatContext, nil), "find stream info") else {
             return nil
         }
-        if let videos = self.formatContext?.pointee.streamArray(AVMEDIA_TYPE_VIDEO).filter({$0.open()}) {
-            self.streams[AVMEDIA_TYPE_VIDEO] = videos
+        
+        if let videos = self.formatContext?.pointee.streamArray(AVMEDIA_TYPE_VIDEO) {
+            self.streamsByType[AVMEDIA_TYPE_VIDEO] = videos
         }
-        if let audios = self.formatContext?.pointee.streamArray(AVMEDIA_TYPE_AUDIO).filter({$0.open()}) {
-            self.streams[AVMEDIA_TYPE_AUDIO] = audios
+        if let audios = self.formatContext?.pointee.streamArray(AVMEDIA_TYPE_AUDIO) {
+            self.streamsByType[AVMEDIA_TYPE_AUDIO] = audios
         }
-        if 0 == self.streams.count {
+        if 0 == self.streamsByType.count {
             return nil
         }
         if let subtitles = self.formatContext?.pointee.streamArray(AVMEDIA_TYPE_SUBTITLE).filter({$0.open()}) {
-            self.streams[AVMEDIA_TYPE_SUBTITLE] = subtitles
+            self.streamsByType[AVMEDIA_TYPE_SUBTITLE] = subtitles
         }
+        self.streamsByType.forEach { (key, value) in
+            self.streams.append(contentsOf: value)
+        }
+        self.streams.sort(by: {$0.0.index < $0.1.index})
     }
     
     deinit {
@@ -110,25 +125,56 @@ class SweetFormat {
     
     var videoSize: CGSize {
         
-        guard let index = self.streams.index(forKey: AVMEDIA_TYPE_VIDEO), let stream = self.streams[index].value.first else {
+        guard let index = self.streamsByType.index(forKey: AVMEDIA_TYPE_VIDEO), let stream = self.streamsByType[index].value.first else {
             return CGSize()
         }
         
         return stream.videoSize
     }
+    
+    func stream(forType type: AVMediaType, at: Int32 = -1) -> SweetStream? {
+        
+        guard let streams = self.streamsByType[type] else {
+            return nil
+        }
+        
+        if -1 == at {
+            return streams.first
+        }
+        for stream in streams {
+            if stream.index == at {
+                return stream
+            }
+        }
+        
+        return nil
+    }
 }
 
-class SweetStream {
+class SweetStream: CustomStringConvertible {
+    
+    var description: String {
+        let codecpar = self.stream.pointee.codecpar.pointee
+        return "codec: \(codecpar.codec_id), media_type: \(codecpar.codec_type), color_primaries: \(codecpar.color_primaries), color_space: \(codecpar.color_space)"
+    }
+    
     let format: UnsafeMutablePointer<AVFormatContext>
     let index: Int32
     let stream: UnsafeMutablePointer<AVStream>
-    let codec: UnsafeMutablePointer<AVCodecContext>
+    var codec: UnsafeMutablePointer<AVCodecContext>? = nil
     let type: AVMediaType
+    var filter: AVFilterHelper?
     var w: Int32 {
-        return codec.pointee.width
+        guard let c = self.codec else {
+            return 0
+        }
+        return c.pointee.width
     }
     var h: Int32 {
-        return codec.pointee.height
+        guard let c = self.codec else {
+            return 0
+        }
+        return c.pointee.height
     }
     
     var videoSize: CGSize {
@@ -136,7 +182,8 @@ class SweetStream {
     }
     
     var fps: Double {
-        return 1.0 / av_q2d(self.stream.pointee.avg_frame_rate)
+        let fps = av_q2d(self.stream.pointee.avg_frame_rate)
+        return fps
     }
     
     var time_base: AVRational {
@@ -146,6 +193,10 @@ class SweetStream {
         default:
             return AVRational()
         }
+    }
+    
+    var colorSpace: AVColorSpace {
+        return self.stream.pointee.codecpar.pointee.color_space
     }
     
     init?(format: UnsafeMutablePointer<AVFormatContext>?, type: AVMediaType = AVMEDIA_TYPE_UNKNOWN, index: Int32 = -1) {
@@ -174,59 +225,62 @@ class SweetStream {
             return nil
         }
         self.stream = s
-        
-        self.codec = self.stream.pointee.codec
-        self.codec.pointee.thread_count = 2
-        self.codec.pointee.thread_type = FF_THREAD_FRAME
     }
     
     func open() -> Bool {
-        guard let decoder = avcodec_find_decoder(self.codec.pointee.codec_id) else {
+        guard let c = avcodec_find_decoder(self.stream.pointee.codecpar.pointee.codec_id) else {
             return false
         }
-        guard 0 <= avcodec_open2(self.codec, decoder, nil) else {
+        self.codec = avcodec_alloc_context3(c)
+        guard av_success(avcodec_parameters_to_context(self.codec, self.stream.pointee.codecpar)) else {
             return false
         }
+        self.codec?.pointee.thread_count = 2
+        self.codec?.pointee.thread_type = FF_THREAD_FRAME
+        guard av_success(avcodec_open2(self.codec, c, nil)) else {
+            return false
+        }
+        print("open stream -> \(self)")
         return true
+    }
+    
+    deinit {
+        avcodec_free_context(&codec)
     }
     
     enum SweetDecodeResult {
         case err(Int32)
         case success
-        case pass
     }
     
     func decode(_ pkt: UnsafeMutablePointer<AVPacket>, frame: UnsafeMutablePointer<AVFrame>) -> SweetDecodeResult{
-        
         var ret = avcodec_send_packet(self.codec, pkt)
-        if 0 > ret && ret != AVERROR_CONVERT(EAGAIN) && false == IS_AVERROR_EOF(ret){
+        if 0 > ret && ret != AVERROR_CONVERT(EAGAIN) && false == IS_AVERROR_EOF(ret) {
             return .err(ret)
         }
         ret = avcodec_receive_frame(self.codec, frame)
-        if ret == AVERROR_CONVERT(EAGAIN) {
-            return .pass
-        }
-        if 0 > ret && false == IS_AVERROR_EOF(ret) {
-            return .err(ret)
-        }
-        guard let filter = self.filter else {
-            return .success
-        }
-        switch filter.applyFilter(frame) {
-        case .success:
-            return .success
-        case .continue, .noMoreFrames:
-            return .pass
-        case .failed:
-            return .err(-1)
-        default:
-            break
+        if 0 > ret {
+            return ret == AVERROR_CONVERT(EAGAIN) ? .success : .err(ret)
         }
         return .success
     }
     
-    var filter: AVFilterHelper? = nil
-    func setupFilter(
+    func filtering(frame: UnsafeMutablePointer<AVFrame>) -> AVFilterApplyResult {
+        return self.filter?.applyFilter(frame) ?? .failed
+    }
+    
+    func setupVideoFilter() {
+        if let _ = self.filter {
+            return
+        }
+        self.filter = AVFilterHelper()
+        guard self.filter?.setup(self.format, videoStream: self.stream, filterDescription: "format=pix_fmts=rgb24") ?? false else {
+            self.filter = nil
+            return
+        }
+    }
+    
+    func setupAudioFilter(
         _ outSampleRate: Int32,
         outSampleFmt: AVSampleFormat,
         outChannels: Int32) -> Bool{
@@ -261,5 +315,94 @@ class SweetStream {
             audioStream: stream,
             abuffer: "sample_rate=\(inSampleRate):sample_fmt=\(inSampleFormatStr):time_base=\(inTimeBaseStr):channels=\(inChannels):channel_layout=\(inChannelLayoutString)",
             aformat: "sample_rates=\(outSampleRate):sample_fmts=\(outSampleFormatStr):channel_layouts=\(outChannelLayoutString)") ?? false
+    }
+}
+
+protocol Namer: CustomDebugStringConvertible {
+    var name:String { get }
+    var debugDescription: String { get }
+}
+
+extension Namer {
+    var name: String {
+        return ""
+    }
+    
+    public var debugDescription: String {
+        return self.name
+    }
+}
+
+extension AVCodecID: Namer {
+    public var name: String {
+        let name = String.init(cString: avcodec_get_name(self))
+        return name
+    }
+}
+
+extension AVMediaType: Namer {
+    public var name: String {
+        let name = String(cString: av_get_media_type_string(self))
+        return name
+    }
+}
+
+extension AVColorPrimaries: Namer {
+    var name: String {
+        var name: String = "color primaries "
+        switch self {
+        case AVCOL_PRI_BT2020:
+            name += "bt20202"
+        case AVCOL_PRI_BT709:
+            name += "bt709"
+        default:
+            name += "bt601"
+        }
+        return name
+    }
+}
+
+extension AVColorSpace: Namer {
+    var name: String {
+        var name: String = "color space "
+        switch self {
+        case AVCOL_SPC_BT2020_CL, AVCOL_SPC_BT2020_NCL:
+            name += "bt2020"
+        case AVCOL_SPC_BT709:
+            name += "bt709"
+        default:
+            name += "bt601"
+        }
+        return name
+    }
+}
+
+protocol Convolutioner {
+    var matrix: ColorMatrix { get }
+}
+
+extension AVColorSpace: Convolutioner {
+    var matrix: ColorMatrix {
+        switch self {
+        case AVCOL_SPC_BT709:
+            return ColorMatrix.bt709
+        case AVCOL_SPC_BT2020_CL, AVCOL_SPC_BT2020_NCL:
+            return ColorMatrix.bt2020
+        default:
+            return ColorMatrix.bt601
+        }
+    }
+}
+
+extension AVColorPrimaries: Convolutioner {
+    var matrix: ColorMatrix {
+        switch self {
+        case AVCOL_PRI_BT709:
+            return ColorMatrix.bt709
+        case AVCOL_PRI_BT2020:
+            return ColorMatrix.bt2020
+        default:
+            return ColorMatrix.bt601
+        }
     }
 }

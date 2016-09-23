@@ -94,10 +94,11 @@ extension float4x4 {
         self = unsafeBitCast(result, to: float4x4.self)
     }
     
-    func raw() -> UnsafeMutablePointer<Float> {
+    func raw() -> [Float] {
         var floats = self
         let buffer: UnsafeMutablePointer<float4x4> = withUnsafeMutablePointer(to: &floats){$0}
-        return buffer.withMemoryRebound(to: Float.self, capacity: float4x4.numberOfElements()){$0}
+        let floatsBuffer: UnsafeMutablePointer<Float> = buffer.withMemoryRebound(to: Float.self, capacity: float4x4.numberOfElements()){$0}
+        return [Float](UnsafeBufferPointer(start: floatsBuffer, count: 16))
     }
 }
 

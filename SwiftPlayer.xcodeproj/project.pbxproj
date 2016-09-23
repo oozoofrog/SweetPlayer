@@ -15,13 +15,12 @@
 		A90E533A1D94FC5400DA3EFC /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C5B09F1D940ED2009E541B /* Light.swift */; };
 		A90E533B1D94FC5400DA3EFC /* float4x4.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E53331D94ED7B00DA3EFC /* float4x4.swift */; };
 		A90E533D1D94FC5400DA3EFC /* BufferProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83DA5FF1D92B54F0079D86C /* BufferProvider.swift */; };
-		A90E53401D9507E700DA3EFC /* Movie.metal in Sources */ = {isa = PBXBuildFile; fileRef = A90E533F1D9507E700DA3EFC /* Movie.metal */; };
+		A90E53401D9507E700DA3EFC /* MovieShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = A90E533F1D9507E700DA3EFC /* MovieShader.metal */; };
 		A9314A731D75121300EC253A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9314A721D75121300EC253A /* AVFoundation.framework */; };
 		A9314A751D75121900EC253A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9314A741D75121900EC253A /* UIKit.framework */; };
 		A9314A781D75121F00EC253A /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9314A761D75121F00EC253A /* CoreFoundation.framework */; };
 		A9314A791D75121F00EC253A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9314A771D75121F00EC253A /* Foundation.framework */; };
 		A9402C971D94CDB000240FEA /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9402C961D94CDB000240FEA /* Math.swift */; };
-		A947D64D1D77BF0C00ED6338 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A947D64C1D77BF0B00ED6338 /* TableViewController.swift */; };
 		A94A9D431D8790380015E441 /* FFmpeg.m in Sources */ = {isa = PBXBuildFile; fileRef = A94A9D401D8790380015E441 /* FFmpeg.m */; };
 		A94A9D441D8790380015E441 /* FFmpegHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94A9D411D8790380015E441 /* FFmpegHelper.swift */; };
 		A94A9D451D8790380015E441 /* MediaHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94A9D421D8790380015E441 /* MediaHelper.swift */; };
@@ -39,11 +38,9 @@
 		A94A9D6F1D879B810015E441 /* sdl.map in CopyFiles */ = {isa = PBXBuildFile; fileRef = A94A9D561D8799EA0015E441 /* sdl.map */; };
 		A94A9D711D879C980015E441 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = A94A9D701D879C980015E441 /* README.md */; };
 		A94A9D731D87B84D0015E441 /* DataContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94A9D721D87B84D0015E441 /* DataContainer.swift */; };
-		A950CE101D8F85FF00A858C0 /* MetalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950CE0F1D8F85FF00A858C0 /* MetalViewController.swift */; };
 		A9534E991D77AF6C00411FC9 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9534E981D77AF6C00411FC9 /* Accelerate.framework */; };
 		D81915281D746C0100D919E9 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D81915271D746C0100D919E9 /* CoreMedia.framework */; };
 		D82223D71D89611300E60EB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82223D61D89611300E60EB0 /* AppDelegate.swift */; };
-		D82223D91D89611300E60EB0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82223D81D89611300E60EB0 /* ViewController.swift */; };
 		D82223DB1D89611300E60EB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D82223DA1D89611300E60EB0 /* Assets.xcassets */; };
 		D82223DE1D89611300E60EB0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D82223DC1D89611300E60EB0 /* Main.storyboard */; };
 		D82223E31D89611D00E60EB0 /* sample.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = A94A9D571D8799F10015E441 /* sample.mp4 */; };
@@ -73,9 +70,11 @@
 		D832355F1D7465E5008689D5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D832355E1D7465E5008689D5 /* libz.tbd */; };
 		D83235611D7465EC008689D5 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D83235601D7465EC008689D5 /* libbz2.tbd */; };
 		D83235631D7465F3008689D5 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D83235621D7465F3008689D5 /* libiconv.tbd */; };
+		D83B5F821D955BE500E731DF /* MViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83B5F811D955BE500E731DF /* MViewController.swift */; };
+		D83B5F851D956DAA00E731DF /* MovieShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = A90E533F1D9507E700DA3EFC /* MovieShader.metal */; };
+		D83B5F871D956DC900E731DF /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83B5F861D956DC900E731DF /* Movie.swift */; };
 		D83DA6001D92B54F0079D86C /* BufferProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83DA5FF1D92B54F0079D86C /* BufferProvider.swift */; };
 		D848FE771D745F4D0058E322 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D848FE761D745F4D0058E322 /* AppDelegate.swift */; };
-		D848FE791D745F4D0058E322 /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D848FE781D745F4D0058E322 /* SceneViewController.swift */; };
 		D848FE7C1D745F4D0058E322 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D848FE7A1D745F4D0058E322 /* Main.storyboard */; };
 		D848FE7E1D745F4D0058E322 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D848FE7D1D745F4D0058E322 /* Assets.xcassets */; };
 		D848FE811D745F4D0058E322 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D848FE7F1D745F4D0058E322 /* LaunchScreen.storyboard */; };
@@ -87,6 +86,9 @@
 		D848FEB51D74639E0058E322 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D848FEB21D74639E0058E322 /* VideoToolbox.framework */; };
 		D85ABD111D7463DF00B8954C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D85ABD101D7463DF00B8954C /* CoreMotion.framework */; };
 		D85ABD131D74640600B8954C /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D85ABD121D74640600B8954C /* GameController.framework */; };
+		D8A469A31D97DE200016A3A8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A469A21D97DE200016A3A8 /* QuartzCore.framework */; };
+		D8B99F331D957BE6003BA29A /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83B5F861D956DC900E731DF /* Movie.swift */; };
+		D8BF260F1D9550EB00D8835D /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BF260E1D9550EB00D8835D /* MovieViewController.swift */; };
 		D8C5B09E1D9409EB009E541B /* cube.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C5B09D1D9409EB009E541B /* cube.png */; };
 		D8C5B0A01D940ED2009E541B /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C5B09F1D940ED2009E541B /* Light.swift */; };
 /* End PBXBuildFile section */
@@ -116,13 +118,12 @@
 
 /* Begin PBXFileReference section */
 		A90E53331D94ED7B00DA3EFC /* float4x4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = float4x4.swift; path = SwiftPlayer4macOS/float4x4.swift; sourceTree = "<group>"; };
-		A90E533F1D9507E700DA3EFC /* Movie.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Movie.metal; sourceTree = "<group>"; };
+		A90E533F1D9507E700DA3EFC /* MovieShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = MovieShader.metal; path = SwiftPlayer/MovieShader.metal; sourceTree = "<group>"; };
 		A9314A721D75121300EC253A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A9314A741D75121900EC253A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A9314A761D75121F00EC253A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		A9314A771D75121F00EC253A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A9402C961D94CDB000240FEA /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Math.swift; path = SwiftPlayer4macOS/Math.swift; sourceTree = "<group>"; };
-		A947D64C1D77BF0B00ED6338 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		A94A9D3F1D8790380015E441 /* FFmpeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFmpeg.h; sourceTree = "<group>"; };
 		A94A9D401D8790380015E441 /* FFmpeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFmpeg.m; sourceTree = "<group>"; };
 		A94A9D411D8790380015E441 /* FFmpegHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFmpegHelper.swift; sourceTree = "<group>"; };
@@ -141,12 +142,10 @@
 		A94A9D691D879A850015E441 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = "libs/SDL-iOS/lib/libSDL2.a"; sourceTree = "<group>"; };
 		A94A9D701D879C980015E441 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A94A9D721D87B84D0015E441 /* DataContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataContainer.swift; sourceTree = "<group>"; };
-		A950CE0F1D8F85FF00A858C0 /* MetalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalViewController.swift; sourceTree = "<group>"; };
 		A9534E981D77AF6C00411FC9 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		D81915271D746C0100D919E9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		D82223D41D89611300E60EB0 /* SwiftPlayer4macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftPlayer4macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D82223D61D89611300E60EB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D82223D81D89611300E60EB0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D82223DA1D89611300E60EB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D82223DD1D89611300E60EB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D82223DF1D89611300E60EB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -172,10 +171,11 @@
 		D832355E1D7465E5008689D5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D83235601D7465EC008689D5 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		D83235621D7465F3008689D5 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		D83B5F811D955BE500E731DF /* MViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MViewController.swift; sourceTree = "<group>"; };
+		D83B5F861D956DC900E731DF /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		D83DA5FF1D92B54F0079D86C /* BufferProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BufferProvider.swift; path = SwiftPlayer4macOS/BufferProvider.swift; sourceTree = "<group>"; };
 		D848FE731D745F4D0058E322 /* SwiftPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D848FE761D745F4D0058E322 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D848FE781D745F4D0058E322 /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
 		D848FE7B1D745F4D0058E322 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D848FE7D1D745F4D0058E322 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D848FE801D745F4D0058E322 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -204,6 +204,8 @@
 		D84F81881D7868D5008C1804 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../ffmpeg/lib/libswscale.a; sourceTree = "<group>"; };
 		D85ABD101D7463DF00B8954C /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		D85ABD121D74640600B8954C /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
+		D8A469A21D97DE200016A3A8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D8BF260E1D9550EB00D8835D /* MovieViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
 		D8C5B09D1D9409EB009E541B /* cube.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cube.png; path = SwiftPlayer4macOS/cube.png; sourceTree = "<group>"; };
 		D8C5B09F1D940ED2009E541B /* Light.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Light.swift; path = SwiftPlayer4macOS/Light.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -229,6 +231,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8A469A31D97DE200016A3A8 /* QuartzCore.framework in Frameworks */,
 				D82DCF191D89441A004F0865 /* Metal.framework in Frameworks */,
 				D82DCF1A1D89441A004F0865 /* MetalKit.framework in Frameworks */,
 				D82DCF1B1D89441A004F0865 /* MetalPerformanceShaders.framework in Frameworks */,
@@ -269,18 +272,13 @@
 				A9402C961D94CDB000240FEA /* Math.swift */,
 				D82F374D1D8978770008FF42 /* Vertex.swift */,
 				D82F374F1D8978B80008FF42 /* Node.swift */,
+				D82DCF1C1D895354004F0865 /* Shaders.metal */,
 				D82F37531D897F320008FF42 /* Cube.swift */,
 				D8C5B09F1D940ED2009E541B /* Light.swift */,
 				A90E53331D94ED7B00DA3EFC /* float4x4.swift */,
 				D83DA5FF1D92B54F0079D86C /* BufferProvider.swift */,
-			);
-			name = Metal;
-			sourceTree = "<group>";
-		};
-		A90E533E1D9507D700DA3EFC /* Metal */ = {
-			isa = PBXGroup;
-			children = (
-				A90E533F1D9507E700DA3EFC /* Movie.metal */,
+				A90E533F1D9507E700DA3EFC /* MovieShader.metal */,
+				D83B5F861D956DC900E731DF /* Movie.swift */,
 			);
 			name = Metal;
 			sourceTree = "<group>";
@@ -289,7 +287,6 @@
 			isa = PBXGroup;
 			children = (
 				D8C5B09D1D9409EB009E541B /* cube.png */,
-				D82DCF1C1D895354004F0865 /* Shaders.metal */,
 				A94A9D701D879C980015E441 /* README.md */,
 				A94A9D571D8799F10015E441 /* sample.mp4 */,
 				A94A9D551D8799EA0015E441 /* ffmpeg.map */,
@@ -298,7 +295,7 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		A94A9D741D87BD630015E441 /* Media */ = {
+		A94A9D741D87BD630015E441 /* FFmpeg */ = {
 			isa = PBXGroup;
 			children = (
 				A94A9D721D87B84D0015E441 /* DataContainer.swift */,
@@ -308,15 +305,15 @@
 				A94A9D411D8790380015E441 /* FFmpegHelper.swift */,
 				A94A9D421D8790380015E441 /* MediaHelper.swift */,
 			);
-			name = Media;
+			name = FFmpeg;
+			path = SwiftPlayer;
 			sourceTree = "<group>";
 		};
 		D82223D51D89611300E60EB0 /* SwiftPlayer4macOS */ = {
 			isa = PBXGroup;
 			children = (
 				D82223D61D89611300E60EB0 /* AppDelegate.swift */,
-				D82223D81D89611300E60EB0 /* ViewController.swift */,
-				A950CE0F1D8F85FF00A858C0 /* MetalViewController.swift */,
+				D83B5F811D955BE500E731DF /* MViewController.swift */,
 				D82223DA1D89611300E60EB0 /* Assets.xcassets */,
 				D82223DC1D89611300E60EB0 /* Main.storyboard */,
 				D82223DF1D89611300E60EB0 /* Info.plist */,
@@ -329,6 +326,7 @@
 			isa = PBXGroup;
 			children = (
 				A90E53351D94FC3F00DA3EFC /* Metal */,
+				A94A9D741D87BD630015E441 /* FFmpeg */,
 				D848FE751D745F4D0058E322 /* SwiftPlayer */,
 				D82223D51D89611300E60EB0 /* SwiftPlayer4macOS */,
 				A94A9D541D8799D80015E441 /* Resources */,
@@ -349,11 +347,8 @@
 		D848FE751D745F4D0058E322 /* SwiftPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				A90E533E1D9507D700DA3EFC /* Metal */,
-				A94A9D741D87BD630015E441 /* Media */,
 				D848FE761D745F4D0058E322 /* AppDelegate.swift */,
-				A947D64C1D77BF0B00ED6338 /* TableViewController.swift */,
-				D848FE781D745F4D0058E322 /* SceneViewController.swift */,
+				D8BF260E1D9550EB00D8835D /* MovieViewController.swift */,
 				D848FE7A1D745F4D0058E322 /* Main.storyboard */,
 				D848FE7D1D745F4D0058E322 /* Assets.xcassets */,
 				D848FE7F1D745F4D0058E322 /* LaunchScreen.storyboard */,
@@ -366,6 +361,7 @@
 		D848FE8E1D745F980058E322 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D8A469A21D97DE200016A3A8 /* QuartzCore.framework */,
 				D82F374B1D8977FA0008FF42 /* GLKit.framework */,
 				D82224051D896E2900E60EB0 /* CoreVideo.framework */,
 				D82224021D8964D300E60EB0 /* QuartzCore.framework */,
@@ -553,6 +549,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D83B5F871D956DC900E731DF /* Movie.swift in Sources */,
 				D82224041D896C4A00E60EB0 /* Shaders.metal in Sources */,
 				D82223E51D89614000E60EB0 /* Player.swift in Sources */,
 				A90E53341D94ED7B00DA3EFC /* float4x4.swift in Sources */,
@@ -562,11 +559,11 @@
 				D82223E71D89614000E60EB0 /* FFmpegHelper.swift in Sources */,
 				D82223E81D89614000E60EB0 /* MediaHelper.swift in Sources */,
 				D82F37541D897F320008FF42 /* Cube.swift in Sources */,
-				D82223D91D89611300E60EB0 /* ViewController.swift in Sources */,
+				D83B5F821D955BE500E731DF /* MViewController.swift in Sources */,
 				A9402C971D94CDB000240FEA /* Math.swift in Sources */,
 				D82F37501D8978B80008FF42 /* Node.swift in Sources */,
 				D82223D71D89611300E60EB0 /* AppDelegate.swift in Sources */,
-				A950CE101D8F85FF00A858C0 /* MetalViewController.swift in Sources */,
+				D83B5F851D956DAA00E731DF /* MovieShader.metal in Sources */,
 				D8C5B0A01D940ED2009E541B /* Light.swift in Sources */,
 				D82223E41D89614000E60EB0 /* DataContainer.swift in Sources */,
 			);
@@ -586,11 +583,11 @@
 				A90E533A1D94FC5400DA3EFC /* Light.swift in Sources */,
 				A90E53371D94FC5400DA3EFC /* Vertex.swift in Sources */,
 				D82DCF1D1D895354004F0865 /* Shaders.metal in Sources */,
-				D848FE791D745F4D0058E322 /* SceneViewController.swift in Sources */,
 				A94A9D451D8790380015E441 /* MediaHelper.swift in Sources */,
-				A947D64D1D77BF0C00ED6338 /* TableViewController.swift in Sources */,
+				D8BF260F1D9550EB00D8835D /* MovieViewController.swift in Sources */,
+				D8B99F331D957BE6003BA29A /* Movie.swift in Sources */,
 				A94A9D711D879C980015E441 /* README.md in Sources */,
-				A90E53401D9507E700DA3EFC /* Movie.metal in Sources */,
+				A90E53401D9507E700DA3EFC /* MovieShader.metal in Sources */,
 				A90E53391D94FC5400DA3EFC /* Cube.swift in Sources */,
 				D848FE771D745F4D0058E322 /* AppDelegate.swift in Sources */,
 				A90E533B1D94FC5400DA3EFC /* float4x4.swift in Sources */,

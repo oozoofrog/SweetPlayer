@@ -8,10 +8,11 @@
 
 import Cocoa
 import MetalKit
+import simd
 
 class ViewController: MetalViewController, MetalViewControllerDelegate {
     
-    var worldModelMatrix: Matrix4!
+    var worldModelMatrix: float4x4!
     var objectToDraw: Cube!
     
     let panSensitivity: Float = 5.0
@@ -20,9 +21,9 @@ class ViewController: MetalViewController, MetalViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.worldModelMatrix = Matrix4()
+        self.worldModelMatrix = float4x4()
         worldModelMatrix.translate(0, y: 0, z: -4)
-        worldModelMatrix.rotateAroundX(Matrix4.degrees(toRad: 25), y: 0, z: 0)
+        worldModelMatrix.rotateAroundX(float4x4.degrees(toRad: 25), y: 0, z: 0)
         
         objectToDraw = Cube(device: self.device, commandQueue: self.commandQueue)
         self.delegate = self

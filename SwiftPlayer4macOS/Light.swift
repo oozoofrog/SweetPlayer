@@ -13,9 +13,11 @@ struct Light {
     var ambientIntensity: Float
     var direction: (Float, Float, Float)
     var diffuseIntensity: Float
+    var shininess: Float
+    var specularIntensity: Float
     
     static func size() -> Int {
-        return MemoryLayout<Light>.size
+        return MemoryLayout<Float>.size * 12
     }
     
     static func count() -> Int {
@@ -23,6 +25,6 @@ struct Light {
     }
     
     func raw() -> [Float] {
-        return [color.0, color.1, color.2, ambientIntensity, direction.0, direction.1, direction.2, diffuseIntensity]
+        return [color.0, color.1, color.2, ambientIntensity, direction.0, direction.1, direction.2, diffuseIntensity, shininess, specularIntensity]
     }
 }

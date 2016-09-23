@@ -10,6 +10,7 @@ import Foundation
 import Metal
 import QuartzCore
 import Accelerate
+import simd
 
 struct Points {
     var x: Float = 0.0
@@ -33,7 +34,7 @@ class Node {
     var texture: MTLTexture
     lazy var samplerState: MTLSamplerState? = Node.defaultSampler(device: self.device)
     
-    let light = Light(color: (1.0, 1.0, 1.0), ambientIntensity: 0.1, direction: (0.0, 0.0, 1.0), diffuseIntensity: 0.8)
+    let light = Light(color: (1.0, 1.0, 1.0), ambientIntensity: 0.1, direction: (0.0, 0.0, 1.0), diffuseIntensity: 0.8, shininess: 10, specularIntensity: 2)
     
     class func defaultSampler(device: MTLDevice) -> MTLSamplerState {
         let pSamplerDescriptor: MTLSamplerDescriptor = MTLSamplerDescriptor()
@@ -62,7 +63,7 @@ class Node {
         self.texture = texture
     }
     
-    func render(_ commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, parentModelViewMatrix: Matrix4, projectionMatrix projection: Matrix4, clearColor: MTLClearColor?) {
+    func render(_ commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, parentModelViewMatrix: float4x4, projectionMatrix projection: float4x4, clearColor: MTLClearColor?) {
         
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].clearColor = clearColor ?? MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1.0)
@@ -76,7 +77,7 @@ class Node {
         renderEncoder.setRenderPipelineState(pipelineState)
         renderEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, at: 0)
         renderEncoder.setCullMode(.front)
-        let nodeModelMatrix = self.modelMatrix
+        var nodeModelMatrix = self.modelMatrix
         nodeModelMatrix.multiplyLeft(parentModelViewMatrix)
         uniformBuffer = bufferProvider.nextUniformsBuffer(projection, modelViewMatrix: nodeModelMatrix, light: light)
         renderEncoder.setVertexBuffer(uniformBuffer, offset: 0, at: 1)
@@ -90,12 +91,12 @@ class Node {
         commandBuffer.commit()
     }
     
-    var modelMatrix: Matrix4 {
-        let matrix = Matrix4()
-        matrix?.translate(self.position.x, y: self.position.y, z: self.position.z)
-        matrix?.rotateAroundX(self.rotation.x, y: self.rotation.y, z: self.rotation.z)
-        matrix?.scale(scale, y: scale, z: scale)
-        return matrix!
+    var modelMatrix: float4x4 {
+        var matrix = float4x4()
+        matrix.translate(self.position.x, y: self.position.y, z: self.position.z)
+        matrix.rotateAroundX(self.rotation.x, y: self.rotation.y, z: self.rotation.z)
+        matrix.scale(scale, y: scale, z: scale)
+        return matrix
     }
     
     var time: CFTimeInterval = 0.0

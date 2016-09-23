@@ -9,6 +9,7 @@
 import Metal
 import MetalKit
 import AppKit
+import simd
 
 class MetalTexture: NSObject {
     

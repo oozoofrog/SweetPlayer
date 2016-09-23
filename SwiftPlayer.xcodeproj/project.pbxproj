@@ -11,6 +11,7 @@
 		A9314A751D75121900EC253A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9314A741D75121900EC253A /* UIKit.framework */; };
 		A9314A781D75121F00EC253A /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9314A761D75121F00EC253A /* CoreFoundation.framework */; };
 		A9314A791D75121F00EC253A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9314A771D75121F00EC253A /* Foundation.framework */; };
+		A9402C971D94CDB000240FEA /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9402C961D94CDB000240FEA /* Math.swift */; };
 		A947D64D1D77BF0C00ED6338 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A947D64C1D77BF0B00ED6338 /* TableViewController.swift */; };
 		A94A9D431D8790380015E441 /* FFmpeg.m in Sources */ = {isa = PBXBuildFile; fileRef = A94A9D401D8790380015E441 /* FFmpeg.m */; };
 		A94A9D441D8790380015E441 /* FFmpegHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94A9D411D8790380015E441 /* FFmpegHelper.swift */; };
@@ -112,6 +113,7 @@
 		A9314A741D75121900EC253A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A9314A761D75121F00EC253A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		A9314A771D75121F00EC253A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A9402C961D94CDB000240FEA /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		A947D64C1D77BF0B00ED6338 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		A94A9D3F1D8790380015E441 /* FFmpeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFmpeg.h; sourceTree = "<group>"; };
 		A94A9D401D8790380015E441 /* FFmpeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFmpeg.m; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 			isa = PBXGroup;
 			children = (
 				D8C5B09D1D9409EB009E541B /* cube.png */,
+				A9402C961D94CDB000240FEA /* Math.swift */,
 				D82F37471D8977D80008FF42 /* Matrix4.h */,
 				D82F37481D8977D80008FF42 /* Matrix4.m */,
 				D82F374D1D8978770008FF42 /* Vertex.swift */,
@@ -541,6 +544,7 @@
 				D82223E81D89614000E60EB0 /* MediaHelper.swift in Sources */,
 				D82F37541D897F320008FF42 /* Cube.swift in Sources */,
 				D82223D91D89611300E60EB0 /* ViewController.swift in Sources */,
+				A9402C971D94CDB000240FEA /* Math.swift in Sources */,
 				D82F37501D8978B80008FF42 /* Node.swift in Sources */,
 				D82223D71D89611300E60EB0 /* AppDelegate.swift in Sources */,
 				D82F374A1D8977D80008FF42 /* Matrix4.m in Sources */,

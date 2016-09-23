@@ -13,17 +13,27 @@ struct VertexIn {
     packed_float3 position;
     packed_float4 color;
     packed_float2 texCoord;
+    packed_float3 normal;
 };
 
 struct VertexOut {
     float4 position [[position]];
     float4 color;
     float2 texCoord;
+    float3 normal;
+};
+
+struct Light {
+    packed_float3 color;
+    float ambientIntensity;
+    packed_float3 direction;
+    float diffuseIntensity;
 };
 
 struct Uniforms {
     float4x4 modelMatrix;
     float4x4 projectionMatrix;
+    Light light;
 };
 
 vertex VertexOut basic_vertex(
@@ -41,14 +51,20 @@ vertex VertexOut basic_vertex(
     out.position = proj_Matrix * mv_Matrix * float4(vertexIn.position, 1);
     out.color = vertexIn.color;
     out.texCoord = vertexIn.texCoord;
+    out.normal = (mv_Matrix * float4(vertexIn.normal, 0.0)).xyz;
     
     return out;
 }
 
 fragment float4 basic_fragment(
                               VertexOut interpolated [[stage_in]],
+                               const device Uniforms& uniforms [[ buffer(1) ]],
                               texture2d<float> tex2d [[ texture(0) ]],
-                              sampler sampler2d [[ sampler(0) ]]) {
-    float4 color = interpolated.color * tex2d.sample(sampler2d, interpolated.texCoord);
-    return color;
+                               sampler sampler2d [[ sampler(0) ]]) {
+    Light light = uniforms.light;
+    float4 ambientColor = float4(light.color * light.ambientIntensity, 1);
+    float diffuseFactor = max(0.0, dot(interpolated.normal, light.direction));
+    float4 diffuseColor = float4(light.color * light.diffuseIntensity * diffuseFactor, 1.0);
+    float4 color = tex2d.sample(sampler2d, interpolated.texCoord);
+    return color * (ambientColor + diffuseColor);
 }

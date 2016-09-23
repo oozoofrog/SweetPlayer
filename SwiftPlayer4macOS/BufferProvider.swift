@@ -8,6 +8,7 @@
 
 import Foundation
 import Metal
+import Accelerate
 
 open class BufferProvider: NSObject {
     
@@ -15,21 +16,24 @@ open class BufferProvider: NSObject {
     fileprivate var uniformBuffers: [MTLBuffer]
     fileprivate var availableBufferIndex: Int = 0
     
-    init(device: MTLDevice, inflightBuffersCount: Int, sizeOfUniformsBuffer: Int) {
+    init(device: MTLDevice, inflightBuffersCount: Int) {
         self.inflightBuffersCount = inflightBuffersCount
+        let sizeOfUniformsBuffer = MemoryLayout<Float>.size * (Matrix4.numberOfElements() * 2) + Light.size()
         uniformBuffers = [MTLBuffer]()
         for _ in 0..<inflightBuffersCount {
             let uniformBuffer = device.makeBuffer(length: sizeOfUniformsBuffer, options: [])
             uniformBuffers.append(uniformBuffer)
         }
+        
     }
     
-    func nextUniformsBuffer(_ projectionMatrix: Matrix4, modelViewMatrix: Matrix4) -> MTLBuffer {
+    func nextUniformsBuffer(_ projectionMatrix: Matrix4, modelViewMatrix: Matrix4, light: Light) -> MTLBuffer {
         let buffer = uniformBuffers[availableBufferIndex]
         let bufferPointer = buffer.contents()
         
-        memcpy(bufferPointer, modelViewMatrix.raw(), MemoryLayout<Float>.size * Matrix4.numberOfElements())
-        memcpy(bufferPointer.advanced(by: MemoryLayout<Float>.size * Matrix4.numberOfElements()), projectionMatrix.raw(), MemoryLayout<Float>.size * Matrix4.numberOfElements())
+        cblas_scopy(Int32(Matrix4.numberOfElements()), modelViewMatrix.raw().assumingMemoryBound(to: Float.self), 1, bufferPointer.assumingMemoryBound(to: Float.self), 1)
+        cblas_scopy(Int32(Matrix4.numberOfElements()), projectionMatrix.raw().assumingMemoryBound(to: Float.self), 1, bufferPointer.assumingMemoryBound(to: Float.self).advanced(by: Matrix4.numberOfElements()), 1)
+        cblas_scopy(Int32(Light.count()), light.raw(), 1, bufferPointer.advanced(by: MemoryLayout<Float>.size * Matrix4.numberOfElements() * 2).assumingMemoryBound(to: Float.self), 1)
         
         availableBufferIndex += 1
         if availableBufferIndex == inflightBuffersCount {

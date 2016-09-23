@@ -12,9 +12,10 @@ struct Vertex {
     var x, y, z: Float
     var r, g, b, a: Float
     var s, t: Float
+    var nx, ny, nz: Float // normal
     
     var floatBuffer: [Float] {
-        return [x, y, z, r, g, b, a, s, t]
+        return [x, y, z, r, g, b, a, s, t, nx, ny, nz]
     }
     
     mutating func scale(_ scale: Float) -> Vertex {

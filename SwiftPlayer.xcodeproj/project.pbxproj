@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		A90E53341D94ED7B00DA3EFC /* float4x4.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E53331D94ED7B00DA3EFC /* float4x4.swift */; };
+		A90E53361D94FC5400DA3EFC /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9402C961D94CDB000240FEA /* Math.swift */; };
+		A90E53371D94FC5400DA3EFC /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82F374D1D8978770008FF42 /* Vertex.swift */; };
+		A90E53381D94FC5400DA3EFC /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82F374F1D8978B80008FF42 /* Node.swift */; };
+		A90E53391D94FC5400DA3EFC /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82F37531D897F320008FF42 /* Cube.swift */; };
+		A90E533A1D94FC5400DA3EFC /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C5B09F1D940ED2009E541B /* Light.swift */; };
+		A90E533B1D94FC5400DA3EFC /* float4x4.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E53331D94ED7B00DA3EFC /* float4x4.swift */; };
+		A90E533D1D94FC5400DA3EFC /* BufferProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83DA5FF1D92B54F0079D86C /* BufferProvider.swift */; };
 		A9314A731D75121300EC253A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9314A721D75121300EC253A /* AVFoundation.framework */; };
 		A9314A751D75121900EC253A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9314A741D75121900EC253A /* UIKit.framework */; };
 		A9314A781D75121F00EC253A /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9314A761D75121F00EC253A /* CoreFoundation.framework */; };
@@ -79,7 +86,6 @@
 		D848FEB51D74639E0058E322 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D848FEB21D74639E0058E322 /* VideoToolbox.framework */; };
 		D85ABD111D7463DF00B8954C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D85ABD101D7463DF00B8954C /* CoreMotion.framework */; };
 		D85ABD131D74640600B8954C /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D85ABD121D74640600B8954C /* GameController.framework */; };
-		D8C5B09C1D940030009E541B /* MetalTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C5B09B1D940030009E541B /* MetalTexture.swift */; };
 		D8C5B09E1D9409EB009E541B /* cube.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C5B09D1D9409EB009E541B /* cube.png */; };
 		D8C5B0A01D940ED2009E541B /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C5B09F1D940ED2009E541B /* Light.swift */; };
 /* End PBXBuildFile section */
@@ -108,12 +114,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A90E53331D94ED7B00DA3EFC /* float4x4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = float4x4.swift; sourceTree = "<group>"; };
+		A90E53331D94ED7B00DA3EFC /* float4x4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = float4x4.swift; path = SwiftPlayer4macOS/float4x4.swift; sourceTree = "<group>"; };
 		A9314A721D75121300EC253A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A9314A741D75121900EC253A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A9314A761D75121F00EC253A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		A9314A771D75121F00EC253A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		A9402C961D94CDB000240FEA /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		A9402C961D94CDB000240FEA /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Math.swift; path = SwiftPlayer4macOS/Math.swift; sourceTree = "<group>"; };
 		A947D64C1D77BF0B00ED6338 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		A94A9D3F1D8790380015E441 /* FFmpeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFmpeg.h; sourceTree = "<group>"; };
 		A94A9D401D8790380015E441 /* FFmpeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFmpeg.m; sourceTree = "<group>"; };
@@ -158,13 +164,13 @@
 		D82DCF181D89441A004F0865 /* MetalPerformanceShaders.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalPerformanceShaders.framework; path = System/Library/Frameworks/MetalPerformanceShaders.framework; sourceTree = SDKROOT; };
 		D82DCF1C1D895354004F0865 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = Shaders.metal; path = SwiftPlayer/Shaders.metal; sourceTree = "<group>"; };
 		D82F374B1D8977FA0008FF42 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/GLKit.framework; sourceTree = DEVELOPER_DIR; };
-		D82F374D1D8978770008FF42 /* Vertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
-		D82F374F1D8978B80008FF42 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
-		D82F37531D897F320008FF42 /* Cube.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
+		D82F374D1D8978770008FF42 /* Vertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Vertex.swift; path = SwiftPlayer4macOS/Vertex.swift; sourceTree = "<group>"; };
+		D82F374F1D8978B80008FF42 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Node.swift; path = SwiftPlayer4macOS/Node.swift; sourceTree = "<group>"; };
+		D82F37531D897F320008FF42 /* Cube.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cube.swift; path = SwiftPlayer4macOS/Cube.swift; sourceTree = "<group>"; };
 		D832355E1D7465E5008689D5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D83235601D7465EC008689D5 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		D83235621D7465F3008689D5 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
-		D83DA5FF1D92B54F0079D86C /* BufferProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BufferProvider.swift; sourceTree = "<group>"; };
+		D83DA5FF1D92B54F0079D86C /* BufferProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BufferProvider.swift; path = SwiftPlayer4macOS/BufferProvider.swift; sourceTree = "<group>"; };
 		D848FE731D745F4D0058E322 /* SwiftPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D848FE761D745F4D0058E322 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D848FE781D745F4D0058E322 /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
@@ -196,9 +202,8 @@
 		D84F81881D7868D5008C1804 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../ffmpeg/lib/libswscale.a; sourceTree = "<group>"; };
 		D85ABD101D7463DF00B8954C /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		D85ABD121D74640600B8954C /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
-		D8C5B09B1D940030009E541B /* MetalTexture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalTexture.swift; sourceTree = "<group>"; };
-		D8C5B09D1D9409EB009E541B /* cube.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cube.png; sourceTree = "<group>"; };
-		D8C5B09F1D940ED2009E541B /* Light.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Light.swift; sourceTree = "<group>"; };
+		D8C5B09D1D9409EB009E541B /* cube.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cube.png; path = SwiftPlayer4macOS/cube.png; sourceTree = "<group>"; };
+		D8C5B09F1D940ED2009E541B /* Light.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Light.swift; path = SwiftPlayer4macOS/Light.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,9 +261,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A90E53351D94FC3F00DA3EFC /* Metal */ = {
+			isa = PBXGroup;
+			children = (
+				A9402C961D94CDB000240FEA /* Math.swift */,
+				D82F374D1D8978770008FF42 /* Vertex.swift */,
+				D82F374F1D8978B80008FF42 /* Node.swift */,
+				D82F37531D897F320008FF42 /* Cube.swift */,
+				D8C5B09F1D940ED2009E541B /* Light.swift */,
+				A90E53331D94ED7B00DA3EFC /* float4x4.swift */,
+				D83DA5FF1D92B54F0079D86C /* BufferProvider.swift */,
+			);
+			name = Metal;
+			sourceTree = "<group>";
+		};
 		A94A9D541D8799D80015E441 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D8C5B09D1D9409EB009E541B /* cube.png */,
 				D82DCF1C1D895354004F0865 /* Shaders.metal */,
 				A94A9D701D879C980015E441 /* README.md */,
 				A94A9D571D8799F10015E441 /* sample.mp4 */,
@@ -284,15 +304,6 @@
 		D82223D51D89611300E60EB0 /* SwiftPlayer4macOS */ = {
 			isa = PBXGroup;
 			children = (
-				D8C5B09D1D9409EB009E541B /* cube.png */,
-				A9402C961D94CDB000240FEA /* Math.swift */,
-				D82F374D1D8978770008FF42 /* Vertex.swift */,
-				D82F374F1D8978B80008FF42 /* Node.swift */,
-				D82F37531D897F320008FF42 /* Cube.swift */,
-				D8C5B09F1D940ED2009E541B /* Light.swift */,
-				A90E53331D94ED7B00DA3EFC /* float4x4.swift */,
-				D8C5B09B1D940030009E541B /* MetalTexture.swift */,
-				D83DA5FF1D92B54F0079D86C /* BufferProvider.swift */,
 				D82223D61D89611300E60EB0 /* AppDelegate.swift */,
 				D82223D81D89611300E60EB0 /* ViewController.swift */,
 				A950CE0F1D8F85FF00A858C0 /* MetalViewController.swift */,
@@ -307,6 +318,7 @@
 		D848FE6A1D745F4D0058E322 = {
 			isa = PBXGroup;
 			children = (
+				A90E53351D94FC3F00DA3EFC /* Metal */,
 				D848FE751D745F4D0058E322 /* SwiftPlayer */,
 				D82223D51D89611300E60EB0 /* SwiftPlayer4macOS */,
 				A94A9D541D8799D80015E441 /* Resources */,
@@ -531,7 +543,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D82224041D896C4A00E60EB0 /* Shaders.metal in Sources */,
-				D8C5B09C1D940030009E541B /* MetalTexture.swift in Sources */,
 				D82223E51D89614000E60EB0 /* Player.swift in Sources */,
 				A90E53341D94ED7B00DA3EFC /* float4x4.swift in Sources */,
 				D82223E61D89614000E60EB0 /* FFmpeg.m in Sources */,
@@ -556,14 +567,21 @@
 			files = (
 				A94A9D431D8790380015E441 /* FFmpeg.m in Sources */,
 				A94A9D441D8790380015E441 /* FFmpegHelper.swift in Sources */,
+				A90E533D1D94FC5400DA3EFC /* BufferProvider.swift in Sources */,
+				A90E53361D94FC5400DA3EFC /* Math.swift in Sources */,
 				A94A9D731D87B84D0015E441 /* DataContainer.swift in Sources */,
 				D848FEAB1D7462F50058E322 /* Player.swift in Sources */,
+				A90E53381D94FC5400DA3EFC /* Node.swift in Sources */,
+				A90E533A1D94FC5400DA3EFC /* Light.swift in Sources */,
+				A90E53371D94FC5400DA3EFC /* Vertex.swift in Sources */,
 				D82DCF1D1D895354004F0865 /* Shaders.metal in Sources */,
 				D848FE791D745F4D0058E322 /* SceneViewController.swift in Sources */,
 				A94A9D451D8790380015E441 /* MediaHelper.swift in Sources */,
 				A947D64D1D77BF0C00ED6338 /* TableViewController.swift in Sources */,
 				A94A9D711D879C980015E441 /* README.md in Sources */,
+				A90E53391D94FC5400DA3EFC /* Cube.swift in Sources */,
 				D848FE771D745F4D0058E322 /* AppDelegate.swift in Sources */,
+				A90E533B1D94FC5400DA3EFC /* float4x4.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

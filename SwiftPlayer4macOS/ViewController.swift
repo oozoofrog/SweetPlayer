@@ -25,7 +25,7 @@ class ViewController: MetalViewController, MetalViewControllerDelegate {
         worldModelMatrix.translate(0, y: 0, z: -4)
         worldModelMatrix.rotateAroundX(float4x4.degrees(toRad: 25), y: 0, z: 0)
         
-        objectToDraw = Cube(device: self.device, commandQueue: self.commandQueue)
+        objectToDraw = Cube(device: self.device, commandQueue: self.commandQueue, textureLoader: self.textureLoader)
         self.delegate = self
         
         self.setupGesture()

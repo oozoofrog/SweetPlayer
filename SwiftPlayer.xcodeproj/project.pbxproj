@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A90E53321D94EC1B00DA3EFC /* float4x4.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E53311D94EC1B00DA3EFC /* float4x4.swift */; };
 		A9314A731D75121300EC253A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9314A721D75121300EC253A /* AVFoundation.framework */; };
 		A9314A751D75121900EC253A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9314A741D75121900EC253A /* UIKit.framework */; };
 		A9314A781D75121F00EC253A /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9314A761D75121F00EC253A /* CoreFoundation.framework */; };
@@ -57,8 +58,6 @@
 		D82DCF1A1D89441A004F0865 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82DCF171D89441A004F0865 /* MetalKit.framework */; };
 		D82DCF1B1D89441A004F0865 /* MetalPerformanceShaders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82DCF181D89441A004F0865 /* MetalPerformanceShaders.framework */; };
 		D82DCF1D1D895354004F0865 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = D82DCF1C1D895354004F0865 /* Shaders.metal */; };
-		D82F37491D8977D80008FF42 /* Matrix4.h in Headers */ = {isa = PBXBuildFile; fileRef = D82F37471D8977D80008FF42 /* Matrix4.h */; };
-		D82F374A1D8977D80008FF42 /* Matrix4.m in Sources */ = {isa = PBXBuildFile; fileRef = D82F37481D8977D80008FF42 /* Matrix4.m */; };
 		D82F374C1D8977FA0008FF42 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82F374B1D8977FA0008FF42 /* GLKit.framework */; };
 		D82F374E1D8978770008FF42 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82F374D1D8978770008FF42 /* Vertex.swift */; };
 		D82F37501D8978B80008FF42 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82F374F1D8978B80008FF42 /* Node.swift */; };
@@ -109,6 +108,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A90E53311D94EC1B00DA3EFC /* float4x4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = float4x4.swift; sourceTree = "<group>"; };
 		A9314A721D75121300EC253A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A9314A741D75121900EC253A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A9314A761D75121F00EC253A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -142,7 +142,6 @@
 		D82223DA1D89611300E60EB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D82223DD1D89611300E60EB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D82223DF1D89611300E60EB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D82223EF1D89618E00E60EB0 /* SwiftPlayer4macOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftPlayer4macOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		D82223F21D89625300E60EB0 /* libavcodec.57.48.101.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavcodec.57.48.101.dylib; path = ../../../../../usr/local/Cellar/ffmpeg/3.1.3/lib/libavcodec.57.48.101.dylib; sourceTree = "<group>"; };
 		D82223F31D89625300E60EB0 /* libavdevice.57.0.101.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavdevice.57.0.101.dylib; path = ../../../../../usr/local/Cellar/ffmpeg/3.1.3/lib/libavdevice.57.0.101.dylib; sourceTree = "<group>"; };
 		D82223F41D89625300E60EB0 /* libavfilter.6.47.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavfilter.6.47.100.dylib; path = ../../../../../usr/local/Cellar/ffmpeg/3.1.3/lib/libavfilter.6.47.100.dylib; sourceTree = "<group>"; };
@@ -157,8 +156,6 @@
 		D82DCF171D89441A004F0865 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		D82DCF181D89441A004F0865 /* MetalPerformanceShaders.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalPerformanceShaders.framework; path = System/Library/Frameworks/MetalPerformanceShaders.framework; sourceTree = SDKROOT; };
 		D82DCF1C1D895354004F0865 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = Shaders.metal; path = SwiftPlayer/Shaders.metal; sourceTree = "<group>"; };
-		D82F37471D8977D80008FF42 /* Matrix4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix4.h; sourceTree = "<group>"; };
-		D82F37481D8977D80008FF42 /* Matrix4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Matrix4.m; sourceTree = "<group>"; };
 		D82F374B1D8977FA0008FF42 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/GLKit.framework; sourceTree = DEVELOPER_DIR; };
 		D82F374D1D8978770008FF42 /* Vertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
 		D82F374F1D8978B80008FF42 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
@@ -288,12 +285,11 @@
 			children = (
 				D8C5B09D1D9409EB009E541B /* cube.png */,
 				A9402C961D94CDB000240FEA /* Math.swift */,
-				D82F37471D8977D80008FF42 /* Matrix4.h */,
-				D82F37481D8977D80008FF42 /* Matrix4.m */,
 				D82F374D1D8978770008FF42 /* Vertex.swift */,
 				D82F374F1D8978B80008FF42 /* Node.swift */,
 				D82F37531D897F320008FF42 /* Cube.swift */,
 				D8C5B09F1D940ED2009E541B /* Light.swift */,
+				A90E53311D94EC1B00DA3EFC /* float4x4.swift */,
 				D8C5B09B1D940030009E541B /* MetalTexture.swift */,
 				D83DA5FF1D92B54F0079D86C /* BufferProvider.swift */,
 				D82223D61D89611300E60EB0 /* AppDelegate.swift */,
@@ -302,7 +298,6 @@
 				D82223DA1D89611300E60EB0 /* Assets.xcassets */,
 				D82223DC1D89611300E60EB0 /* Main.storyboard */,
 				D82223DF1D89611300E60EB0 /* Info.plist */,
-				D82223EF1D89618E00E60EB0 /* SwiftPlayer4macOS-Bridging-Header.h */,
 			);
 			path = SwiftPlayer4macOS;
 			sourceTree = "<group>";
@@ -411,7 +406,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D82F37491D8977D80008FF42 /* Matrix4.h in Headers */,
 				D82223F11D8961DB00E60EB0 /* FFmpeg.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -547,8 +541,8 @@
 				A9402C971D94CDB000240FEA /* Math.swift in Sources */,
 				D82F37501D8978B80008FF42 /* Node.swift in Sources */,
 				D82223D71D89611300E60EB0 /* AppDelegate.swift in Sources */,
-				D82F374A1D8977D80008FF42 /* Matrix4.m in Sources */,
 				A950CE101D8F85FF00A858C0 /* MetalViewController.swift in Sources */,
+				A90E53321D94EC1B00DA3EFC /* float4x4.swift in Sources */,
 				D8C5B0A01D940ED2009E541B /* Light.swift in Sources */,
 				D82223E41D89614000E60EB0 /* DataContainer.swift in Sources */,
 			);
@@ -622,7 +616,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ngenii.SwiftPlayer4macOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(PRODUCT_NAME)/SwiftPlayer4macOS-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -648,7 +641,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ngenii.SwiftPlayer4macOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(PRODUCT_NAME)/SwiftPlayer4macOS-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

@@ -9,6 +9,7 @@
 import Foundation
 import Metal
 import Accelerate
+import simd
 
 open class BufferProvider: NSObject {
     
@@ -18,7 +19,7 @@ open class BufferProvider: NSObject {
     
     init(device: MTLDevice, inflightBuffersCount: Int) {
         self.inflightBuffersCount = inflightBuffersCount
-        let sizeOfUniformsBuffer = MemoryLayout<Float>.size * (Matrix4.numberOfElements() * 2) + Light.size()
+        let sizeOfUniformsBuffer = MemoryLayout<Float>.size * (float4x4.numberOfElements() * 2) + Light.size()
         uniformBuffers = [MTLBuffer]()
         for _ in 0..<inflightBuffersCount {
             let uniformBuffer = device.makeBuffer(length: sizeOfUniformsBuffer, options: [])
@@ -27,13 +28,13 @@ open class BufferProvider: NSObject {
         
     }
     
-    func nextUniformsBuffer(_ projectionMatrix: Matrix4, modelViewMatrix: Matrix4, light: Light) -> MTLBuffer {
+    func nextUniformsBuffer(_ projectionMatrix: float4x4, modelViewMatrix: float4x4, light: Light) -> MTLBuffer {
         let buffer = uniformBuffers[availableBufferIndex]
         let bufferPointer = buffer.contents()
         
-        cblas_scopy(Int32(Matrix4.numberOfElements()), modelViewMatrix.raw().assumingMemoryBound(to: Float.self), 1, bufferPointer.assumingMemoryBound(to: Float.self), 1)
-        cblas_scopy(Int32(Matrix4.numberOfElements()), projectionMatrix.raw().assumingMemoryBound(to: Float.self), 1, bufferPointer.assumingMemoryBound(to: Float.self).advanced(by: Matrix4.numberOfElements()), 1)
-        cblas_scopy(Int32(Light.count()), light.raw(), 1, bufferPointer.advanced(by: MemoryLayout<Float>.size * Matrix4.numberOfElements() * 2).assumingMemoryBound(to: Float.self), 1)
+        cblas_scopy(Int32(float4x4.numberOfElements()), modelViewMatrix.raw(), 1, bufferPointer.assumingMemoryBound(to: Float.self), 1)
+        cblas_scopy(Int32(float4x4.numberOfElements()), projectionMatrix.raw(), 1, bufferPointer.assumingMemoryBound(to: Float.self).advanced(by: float4x4.numberOfElements()), 1)
+        cblas_scopy(Int32(Light.count()), light.raw(), 1, bufferPointer.advanced(by: MemoryLayout<Float>.size * float4x4.numberOfElements() * 2).assumingMemoryBound(to: Float.self), 1)
         
         availableBufferIndex += 1
         if availableBufferIndex == inflightBuffersCount {

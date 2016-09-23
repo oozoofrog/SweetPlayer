@@ -74,7 +74,7 @@ class TableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let files = self.files, 0 < files.count, let viewController = segue.destination as? ViewController, let selectedPath = self.tableView.indexPathForSelectedRow {
+        if let files = self.files, 0 < files.count, let viewController = segue.destination as? SceneViewController, let selectedPath = self.tableView.indexPathForSelectedRow {
             viewController.path = documentPath + "/\(files[selectedPath.row])"
         }
     }

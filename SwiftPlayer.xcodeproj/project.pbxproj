@@ -15,6 +15,7 @@
 		A90E533A1D94FC5400DA3EFC /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C5B09F1D940ED2009E541B /* Light.swift */; };
 		A90E533B1D94FC5400DA3EFC /* float4x4.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E53331D94ED7B00DA3EFC /* float4x4.swift */; };
 		A90E533D1D94FC5400DA3EFC /* BufferProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83DA5FF1D92B54F0079D86C /* BufferProvider.swift */; };
+		A90E53401D9507E700DA3EFC /* Movie.metal in Sources */ = {isa = PBXBuildFile; fileRef = A90E533F1D9507E700DA3EFC /* Movie.metal */; };
 		A9314A731D75121300EC253A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9314A721D75121300EC253A /* AVFoundation.framework */; };
 		A9314A751D75121900EC253A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9314A741D75121900EC253A /* UIKit.framework */; };
 		A9314A781D75121F00EC253A /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9314A761D75121F00EC253A /* CoreFoundation.framework */; };
@@ -115,6 +116,7 @@
 
 /* Begin PBXFileReference section */
 		A90E53331D94ED7B00DA3EFC /* float4x4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = float4x4.swift; path = SwiftPlayer4macOS/float4x4.swift; sourceTree = "<group>"; };
+		A90E533F1D9507E700DA3EFC /* Movie.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Movie.metal; sourceTree = "<group>"; };
 		A9314A721D75121300EC253A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A9314A741D75121900EC253A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A9314A761D75121F00EC253A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -275,6 +277,14 @@
 			name = Metal;
 			sourceTree = "<group>";
 		};
+		A90E533E1D9507D700DA3EFC /* Metal */ = {
+			isa = PBXGroup;
+			children = (
+				A90E533F1D9507E700DA3EFC /* Movie.metal */,
+			);
+			name = Metal;
+			sourceTree = "<group>";
+		};
 		A94A9D541D8799D80015E441 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -339,6 +349,7 @@
 		D848FE751D745F4D0058E322 /* SwiftPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				A90E533E1D9507D700DA3EFC /* Metal */,
 				A94A9D741D87BD630015E441 /* Media */,
 				D848FE761D745F4D0058E322 /* AppDelegate.swift */,
 				A947D64C1D77BF0B00ED6338 /* TableViewController.swift */,
@@ -579,6 +590,7 @@
 				A94A9D451D8790380015E441 /* MediaHelper.swift in Sources */,
 				A947D64D1D77BF0C00ED6338 /* TableViewController.swift in Sources */,
 				A94A9D711D879C980015E441 /* README.md in Sources */,
+				A90E53401D9507E700DA3EFC /* Movie.metal in Sources */,
 				A90E53391D94FC5400DA3EFC /* Cube.swift in Sources */,
 				D848FE771D745F4D0058E322 /* AppDelegate.swift in Sources */,
 				A90E533B1D94FC5400DA3EFC /* float4x4.swift in Sources */,

@@ -56,6 +56,23 @@ public class MViewController: NSViewController, MTKViewDelegate {
         self.view.window?.aspectRatio = AVMakeRect(aspectRatio: self.player?.videoSize ?? view.bounds.size, insideRect: CGRect(origin: CGPoint(), size: view.bounds.size)).size
     }
     
+    public override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        var link: CVDisplayLink?
+        guard CVDisplayLinkCreateWithActiveCGDisplays(&link) == kCVReturnSuccess else {
+            return
+        }
+        guard let display = link else {
+            return
+        }
+        var period = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(display)
+        
+        var rate = Double(period.timeScale) / Double(period.timeValue)
+        var ratef = round(rate)
+        print(ratef)
+    }
+    
     public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         self.view.window?.aspectRatio = AVMakeRect(aspectRatio: self.player?.videoSize ?? size, insideRect: CGRect(origin: CGPoint(), size: size)).size
     }

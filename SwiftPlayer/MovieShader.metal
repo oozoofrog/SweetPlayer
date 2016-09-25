@@ -29,13 +29,16 @@ vertex VertexOut movieVertex(const device VertexIn* in [[ buffer(0) ]],
     return out;
 }
 
+constexpr sampler sampler2d(coord::normalized,
+                            address::clamp_to_zero,
+                            filter::linear);
+
 fragment float4 movieFragment(VertexOut interpolated [[stage_in]],
                               texture2d<float> yt [[ texture(0) ]],
                               texture2d<float> ut [[ texture(1) ]],
                               texture2d<float> vt [[ texture(2) ]],
                               const device float4x4& convolution [[ buffer(1) ]],
-                              const device float4& yuvk [[ buffer(2) ]],
-                              sampler sampler2d [[ sampler(0) ]]) {
+                              const device float4& yuvk [[ buffer(2) ]]) {
     
     float y = yt.sample(sampler2d, interpolated.texCoord).x;
     float u = ut.sample(sampler2d, interpolated.texCoord).x;

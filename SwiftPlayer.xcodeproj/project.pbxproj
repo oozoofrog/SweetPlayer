@@ -86,6 +86,7 @@
 		D848FEB51D74639E0058E322 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D848FEB21D74639E0058E322 /* VideoToolbox.framework */; };
 		D85ABD111D7463DF00B8954C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D85ABD101D7463DF00B8954C /* CoreMotion.framework */; };
 		D85ABD131D74640600B8954C /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D85ABD121D74640600B8954C /* GameController.framework */; };
+		D878AD071D980D420062D75A /* CVDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = D878AD061D980D420062D75A /* CVDisplay.swift */; };
 		D8A469A31D97DE200016A3A8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A469A21D97DE200016A3A8 /* QuartzCore.framework */; };
 		D8B99F331D957BE6003BA29A /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83B5F861D956DC900E731DF /* Movie.swift */; };
 		D8BF260F1D9550EB00D8835D /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BF260E1D9550EB00D8835D /* MovieViewController.swift */; };
@@ -118,7 +119,7 @@
 
 /* Begin PBXFileReference section */
 		A90E53331D94ED7B00DA3EFC /* float4x4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = float4x4.swift; path = SwiftPlayer4macOS/float4x4.swift; sourceTree = "<group>"; };
-		A90E533F1D9507E700DA3EFC /* MovieShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = MovieShader.metal; path = SwiftPlayer/MovieShader.metal; sourceTree = "<group>"; };
+		A90E533F1D9507E700DA3EFC /* MovieShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = MovieShader.metal; sourceTree = "<group>"; };
 		A9314A721D75121300EC253A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A9314A741D75121900EC253A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A9314A761D75121F00EC253A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -172,7 +173,7 @@
 		D83235601D7465EC008689D5 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		D83235621D7465F3008689D5 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		D83B5F811D955BE500E731DF /* MViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MViewController.swift; sourceTree = "<group>"; };
-		D83B5F861D956DC900E731DF /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		D83B5F861D956DC900E731DF /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Movie.swift; path = ../Movie.swift; sourceTree = "<group>"; };
 		D83DA5FF1D92B54F0079D86C /* BufferProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BufferProvider.swift; path = SwiftPlayer4macOS/BufferProvider.swift; sourceTree = "<group>"; };
 		D848FE731D745F4D0058E322 /* SwiftPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D848FE761D745F4D0058E322 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -204,6 +205,7 @@
 		D84F81881D7868D5008C1804 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../ffmpeg/lib/libswscale.a; sourceTree = "<group>"; };
 		D85ABD101D7463DF00B8954C /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		D85ABD121D74640600B8954C /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
+		D878AD061D980D420062D75A /* CVDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CVDisplay.swift; sourceTree = "<group>"; };
 		D8A469A21D97DE200016A3A8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D8BF260E1D9550EB00D8835D /* MovieViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
 		D8C5B09D1D9409EB009E541B /* cube.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cube.png; path = SwiftPlayer4macOS/cube.png; sourceTree = "<group>"; };
@@ -277,8 +279,6 @@
 				D8C5B09F1D940ED2009E541B /* Light.swift */,
 				A90E53331D94ED7B00DA3EFC /* float4x4.swift */,
 				D83DA5FF1D92B54F0079D86C /* BufferProvider.swift */,
-				A90E533F1D9507E700DA3EFC /* MovieShader.metal */,
-				D83B5F861D956DC900E731DF /* Movie.swift */,
 			);
 			name = Metal;
 			sourceTree = "<group>";
@@ -304,6 +304,8 @@
 				A94A9D401D8790380015E441 /* FFmpeg.m */,
 				A94A9D411D8790380015E441 /* FFmpegHelper.swift */,
 				A94A9D421D8790380015E441 /* MediaHelper.swift */,
+				A90E533F1D9507E700DA3EFC /* MovieShader.metal */,
+				D83B5F861D956DC900E731DF /* Movie.swift */,
 			);
 			name = FFmpeg;
 			path = SwiftPlayer;
@@ -312,6 +314,7 @@
 		D82223D51D89611300E60EB0 /* SwiftPlayer4macOS */ = {
 			isa = PBXGroup;
 			children = (
+				D878AD061D980D420062D75A /* CVDisplay.swift */,
 				D82223D61D89611300E60EB0 /* AppDelegate.swift */,
 				D83B5F811D955BE500E731DF /* MViewController.swift */,
 				D82223DA1D89611300E60EB0 /* Assets.xcassets */,
@@ -478,7 +481,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Kwanghoon Choi";
 				TargetAttributes = {
 					D82223D31D89611300E60EB0 = {
@@ -557,6 +560,7 @@
 				D82F374E1D8978770008FF42 /* Vertex.swift in Sources */,
 				D83DA6001D92B54F0079D86C /* BufferProvider.swift in Sources */,
 				D82223E71D89614000E60EB0 /* FFmpegHelper.swift in Sources */,
+				D878AD071D980D420062D75A /* CVDisplay.swift in Sources */,
 				D82223E81D89614000E60EB0 /* MediaHelper.swift in Sources */,
 				D82F37541D897F320008FF42 /* Cube.swift in Sources */,
 				D83B5F821D955BE500E731DF /* MViewController.swift in Sources */,
@@ -694,6 +698,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -744,6 +749,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

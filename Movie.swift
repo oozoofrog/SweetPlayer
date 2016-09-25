@@ -28,7 +28,7 @@ class Movie {
     let decreaseBuffer: MTLBuffer
     let pipelineState: MTLRenderPipelineState
     let commandQueue: MTLCommandQueue
-    let sample: MTLSamplerState
+    //let sample: MTLSamplerState
     
     fileprivate var videoRatio: CGSize
     var screenRatio: CGSize {
@@ -58,14 +58,6 @@ class Movie {
         pipelineStateDesc.colorAttachments[0].pixelFormat = pixelFormat
 
         pipelineState = try! device.makeRenderPipelineState(descriptor: pipelineStateDesc)
-        let sampleDesc = MTLSamplerDescriptor()
-        sampleDesc.mipFilter = .linear
-        sampleDesc.minFilter = .linear
-        sampleDesc.magFilter = .linear
-        sampleDesc.rAddressMode = .clampToEdge
-        sampleDesc.sAddressMode = .clampToEdge
-        sampleDesc.tAddressMode = .clampToEdge
-        sample = device.makeSamplerState(descriptor: sampleDesc)
         
         self.videoRatio = videoRatio
         self.screenRatio = screenRatio
@@ -91,7 +83,6 @@ class Movie {
         renderEncoder.setFragmentTexture(textures.v.texture, at: 2)
         renderEncoder.setFragmentBuffer(convolutionBuffer, offset: 0, at: 1)
         renderEncoder.setFragmentBuffer(decreaseBuffer, offset: 0, at: 2)
-        renderEncoder.setFragmentSamplerState(sample, at: 0)
         renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6, instanceCount: 1)
         renderEncoder.endEncoding()
         

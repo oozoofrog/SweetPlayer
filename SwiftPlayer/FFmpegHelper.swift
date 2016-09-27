@@ -257,7 +257,12 @@ class SweetStream: CustomStringConvertible {
         return true
     }
     
+    func flush() {
+        print_err(avcodec_send_packet(codec, nil), #function)
+    }
+    
     deinit {
+        flush()
         avcodec_free_context(&codec)
     }
     

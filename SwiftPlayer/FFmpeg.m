@@ -50,6 +50,9 @@ BOOL isErr(int err, const char* desc) {
 }
 
 void print_err(int err, const char *desc) {
+    if ( 0 == err ) {
+        return
+    }
     if (NULL == desc) {
         printf("😱 LIBAV ERR -> %s(%d)\n", av_err2str(err), err);
     }

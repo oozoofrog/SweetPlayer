@@ -120,6 +120,8 @@ class Player {
         self.decodeQueue.async {
             
             defer {
+                self.video?.flush()
+                self.audio?.flush()
                 self.quit = true
             }
             var packet: AVPacket = AVPacket()

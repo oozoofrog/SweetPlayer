@@ -45,8 +45,8 @@ public class MViewController: NSViewController, MTKViewDelegate {
         
         self.mtkView.device = MTLCreateSystemDefaultDevice()
         self.mtkView.colorPixelFormat = .bgra8Unorm_srgb
-        let frameRate = Int(self.player?.fps ?? 0)
-        self.mtkView.preferredFramesPerSecond = frameRate == 0 ? 10 : frameRate
+//        let frameRate = Int(self.player?.fps ?? 0)
+//        self.mtkView.preferredFramesPerSecond = frameRate == 0 ? 10 : frameRate
         self.mtkView.clearColor = MTLClearColorMake(0, 0, 0, 1)
         self.mtkView.delegate = self
         self.mtkView.currentRenderPassDescriptor?.colorAttachments[0].storeAction = .store
@@ -59,40 +59,24 @@ public class MViewController: NSViewController, MTKViewDelegate {
     public override func viewDidAppear() {
         super.viewDidAppear()
         
-        var link: CVDisplayLink?
-        guard CVDisplayLinkCreateWithActiveCGDisplays(&link) == kCVReturnSuccess else {
-            return
-        }
-        guard let display = link else {
-            return
-        }
-        var period = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(display)
-        
-        var rate = Double(period.timeScale) / Double(period.timeValue)
-        var ratef = round(rate)
-        print(ratef)
+        self.player?.start()
     }
     
     public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         self.view.window?.aspectRatio = AVMakeRect(aspectRatio: self.player?.videoSize ?? size, insideRect: CGRect(origin: CGPoint(), size: size)).size
     }
+    var timestamp: Double = 0
     public func draw(in view: MTKView) {
-        var data: VideoData?
-        loop: while true {
-            switch self.player?.decodeFrame() {
-            case .video(let vd)?:
-                data = vd
-                break loop
-            case .finish?:
-                break loop
-            default:
-                break
-            }
+        let timestamp = CFAbsoluteTimeGetCurrent()
+        if 0 == self.timestamp {
+            self.timestamp = timestamp
         }
-        guard let videoData = data else {
-            return
+        switch self.player?.requestVideoFrame(timestamp: timestamp - self.timestamp) {
+        case .video(let data)?:
+            self.movie.render(view: view, data: data)
+        default:
+            break
         }
-        self.movie.render(view: view, data: videoData)
     }
     
     deinit {

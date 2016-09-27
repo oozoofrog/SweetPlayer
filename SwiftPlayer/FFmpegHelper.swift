@@ -123,13 +123,11 @@ class SweetFormat {
         avformat_close_input(&formatContext)
     }
     
-    var videoSize: CGSize {
-        
-        guard let index = self.streamsByType.index(forKey: AVMEDIA_TYPE_VIDEO), let stream = self.streamsByType[index].value.first else {
-            return CGSize()
+    func streams(forType type: AVMediaType) -> [SweetStream]? {
+        guard self.streamsByType.contains(where: {$0.0 == type}) else {
+            return nil
         }
-        
-        return stream.videoSize
+        return self.streamsByType[type]
     }
     
     func stream(forType type: AVMediaType, at: Int32 = -1) -> SweetStream? {

@@ -130,17 +130,32 @@ class SweetFormat {
         return self.streamsByType[type]
     }
     
-    func stream(forType type: AVMediaType, at: Int32 = -1) -> SweetStream? {
+    func stream(forType type: AVMediaType) -> SweetStream? {
+        return self.streams(forType: type)?.first
+    }
+    
+    func stream(forType type: AVMediaType, at: Int = -1) -> SweetStream? {
+        guard let streams = self.streams(forType: type) else {
+            return nil
+        }
+        
+        if 0 <= at && at < streams.count {
+            return streams[at]
+        }
+        return nil
+    }
+    
+    func stream(forType type: AVMediaType, index: Int32 = -1) -> SweetStream? {
         
         guard let streams = self.streamsByType[type] else {
             return nil
         }
         
-        if -1 == at {
+        if -1 == index {
             return streams.first
         }
         for stream in streams {
-            if stream.index == at {
+            if stream.index == index {
                 return stream
             }
         }
@@ -259,6 +274,12 @@ class SweetStream: CustomStringConvertible {
         ret = avcodec_receive_frame(self.codec, frame)
         if 0 > ret {
             return ret == AVERROR_CONVERT(EAGAIN) ? .success : .err(ret)
+        }
+        switch self.filter?.applyFilter(frame) {
+        case AVFilterApplyResult.success?:
+            return .success
+        default:
+            break
         }
         return .success
     }

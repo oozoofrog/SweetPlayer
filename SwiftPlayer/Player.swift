@@ -18,6 +18,14 @@ class Player {
     private var audioHelper: MediaHelper?
     private var videoQueue: Queue<VideoData>?
     
+    private var playing: Bool = false
+    public var isPlaying: Bool {
+        return playing
+    }
+    private var paused: Bool = false
+    public var isPaused: Bool {
+        return paused
+    }
     private var quit: Bool = false
     public var isFinished: Bool {
         return self.quit && true == self.videoQueue?.isEmpty ?? true
@@ -116,7 +124,15 @@ class Player {
         return self.format.streamsByType[AVMEDIA_TYPE_VIDEO]
     }
     
+    public func stop() {
+        self.decodeLock.wait()
+        self.quit = true
+        self.videoQueue?.clear()
+        self.decodeLock.signal()
+    }
+    
     public func start() {
+        self.quit = false
         self.decodeQueue.async {
             
             defer {
@@ -124,24 +140,27 @@ class Player {
                 self.audio?.flush()
                 self.quit = true
             }
+            
             var packet: AVPacket = AVPacket()
             var frame: AVFrame = AVFrame()
+            
+            self.format.seek()
             
             while false == self.quit {
                 self.decodeLock.wait()
                 defer {
                     self.decodeLock.signal()
                 }
-                if self.videoQueue?.full ?? false {
+                if self.videoQueue?.full ?? false || self.quit {
                     continue
                 }
                 
-                guard 0 <= av_read_frame(self.format.formatContext, &packet) else {
+                guard false == self.quit, 0 <= av_read_frame(self.format.formatContext, &packet) else {
                     break
                 }
                 
                 let streamIndex = Int(packet.stream_index)
-                guard streamIndex < self.format.streams.count, self.audioStreamIndex == packet.stream_index || self.videoStreamIndex == packet.stream_index else {
+                guard false == self.quit, streamIndex < self.format.streams.count, self.audioStreamIndex == packet.stream_index || self.videoStreamIndex == packet.stream_index else {
                     continue
                 }
                 let stream = self.format.streams[streamIndex]
@@ -154,13 +173,13 @@ class Player {
                 }
                 switch stream.type {
                 case AVMEDIA_TYPE_VIDEO:
-                    guard let data = frame.videoData(stream.time_base) else {
+                    guard let data = frame.videoData(stream.time_base), false == self.quit else {
                         continue
                     }
                     self.videoQueue?.append(data: data)
                 case AVMEDIA_TYPE_AUDIO:
                     
-                    guard let data = frame.audioData(stream.time_base) else {
+                    guard let data = frame.audioData(stream.time_base), false == self.quit else {
                         continue
                     }
                     self.audioHelper?.audioPlay(data)
@@ -169,14 +188,6 @@ class Player {
                 }
             }
         }
-    }
-    
-    public func pause() {
-        
-    }
-    
-    public func stop() {
-        
     }
 
     public func requestVideoFrame(timestamp: Double) -> PlayerDecoded {
@@ -226,13 +237,13 @@ fileprivate struct Queue<Data: MediaTimeDatable> {
         self.queue.append(data)
     }
     
-    mutating func request(timestamp: Double) -> Data? {
+    mutating func request(timestamp: Double, fixFrame: Bool = false) -> Data? {
         let filtered = self.queue.filter({$0.time > timestamp - framePeriod})
         self.queue = filtered
         guard let firstData = self.queue.first else {
             return nil
         }
-        if firstData.time <= timestamp + framePeriod {
+        if firstData.time <= timestamp + framePeriod && false == fixFrame {
             self.queue.removeFirst()
         }
         return firstData

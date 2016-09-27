@@ -123,6 +123,10 @@ class SweetFormat {
         avformat_close_input(&formatContext)
     }
     
+    func seek() {
+        print_err(av_seek_frame(self.formatContext, -1, 0, AV_TIME_BASE), #function)
+    }
+    
     func streams(forType type: AVMediaType) -> [SweetStream]? {
         guard self.streamsByType.contains(where: {$0.0 == type}) else {
             return nil

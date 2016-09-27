@@ -61,6 +61,16 @@ public class MViewController: NSViewController, MTKViewDelegate {
         
         self.player?.start()
     }
+    @IBAction func click(_ sender: AnyObject) {
+        if self.player?.isFinished ?? false {
+            self.player?.start()
+            self.mtkView.delegate = self
+        } else {
+            self.mtkView.delegate = nil
+            self.player?.stop()
+            self.timestamp = 0
+        }
+    }
     
     public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         self.view.window?.aspectRatio = AVMakeRect(aspectRatio: self.player?.videoSize ?? size, insideRect: CGRect(origin: CGPoint(), size: size)).size

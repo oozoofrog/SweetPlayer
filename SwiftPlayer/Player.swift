@@ -15,6 +15,12 @@ class Player {
     let path: String
     let format: SweetFormat
     
+    private var videoQueue: Queue<VideoData>?
+    
+    private var quit: Bool = false
+    private var decodeQueue: DispatchQueue = DispatchQueue(label: "com.sweetplayer.player.decode")
+    private let decodeLock: DispatchSemaphore = DispatchSemaphore(value: 1)
+    
     init?(path: String) {
         self.path = path
         av_register_all()
@@ -29,14 +35,26 @@ class Player {
     private func initialize() {
         self.playVideoStreamAt = 0
         self.playAudioStreamAt = 0
+        
+        if let fps = self.video?.fps {
+            self.videoQueue = Queue(maxQueueCount: 16, framePeriod: 1.0 / fps)
+        }
     }
     
     deinit {
         avformat_network_deinit()
     }
     
+    var video: SweetStream? {
+        return self.format.stream(forType: AVMEDIA_TYPE_VIDEO, at: Int32(self.playVideoStreamAt))
+    }
+    
+    var audio: SweetStream? {
+        return self.format.stream(forType: AVMEDIA_TYPE_AUDIO, at: Int32(self.playAudioStreamAt))
+    }
+    
     var videoSize: CGSize {
-        guard let videoStream = self.format.stream(forType: AVMEDIA_TYPE_VIDEO) else {
+        guard let videoStream = self.video else {
             return CGSize()
         }
         return videoStream.videoSize
@@ -44,10 +62,6 @@ class Player {
     
     var fps: Double {
         return self.format.stream(forType: AVMEDIA_TYPE_VIDEO)?.fps ?? 0.0
-    }
-    
-    func cancel() {
-        
     }
     
     var videoStreamIndex: Int32 = -1
@@ -84,64 +98,128 @@ class Player {
         }
     }
     
-    
     var audios: [SweetStream]? {
         return self.format.streamsByType[AVMEDIA_TYPE_AUDIO]
-    }
-    
-    var audio: SweetStream? {
-        return self.audios?[self.playAudioStreamAt]
     }
     
     var videos: [SweetStream]? {
         return self.format.streamsByType[AVMEDIA_TYPE_VIDEO]
     }
     
-    var video: SweetStream? {
-        return self.videos?[self.playVideoStreamAt]
-    }
-    
-    var packet: AVPacket = AVPacket()
-    var frame: AVFrame = AVFrame()
-    enum PlayerDecoded {
-        case audio(AudioData)
-        case video(VideoData)
-        case unknown
-        case finish
-    }
-    func decodeFrame() -> PlayerDecoded {
-        
-        while 0 <= av_read_frame(self.format.formatContext, &packet) {
+    public func start() {
+        self.decodeQueue.async {
             
-            let streamIndex = Int(packet.stream_index)
-            guard streamIndex < self.format.streams.count, audioStreamIndex == packet.stream_index || videoStreamIndex == packet.stream_index else {
-                return .unknown
+            defer {
+                print("decoding finished")
+                self.quit = true
             }
-            let stream = self.format.streams[streamIndex]
-            switch stream.decode(&packet, frame: &frame) {
-            case .err(let err):
-                print_err(err, #function)
-                return .finish
-            case .success:
-                break
-            }
-            switch stream.type {
-            case AVMEDIA_TYPE_VIDEO:
-                guard let data = frame.videoData(stream.time_base) else {
-                    return .unknown
+            var packet: AVPacket = AVPacket()
+            var frame: AVFrame = AVFrame()
+            
+            while false == self.quit {
+                self.decodeLock.wait()
+                defer {
+                    self.decodeLock.signal()
                 }
-                return .video(data)
-            case AVMEDIA_TYPE_AUDIO:
+                if self.videoQueue?.full ?? false {
+                    continue
+                }
                 
-                guard let data = frame.audioData(stream.time_base) else {
-                    return .unknown
+                guard 0 <= av_read_frame(self.format.formatContext, &packet) else {
+                    break
                 }
-                return .audio(data)
-            default:
-                return .unknown
+                
+                let streamIndex = Int(packet.stream_index)
+                guard streamIndex < self.format.streams.count, self.audioStreamIndex == packet.stream_index || self.videoStreamIndex == packet.stream_index else {
+                    continue
+                }
+                let stream = self.format.streams[streamIndex]
+                switch stream.decode(&packet, frame: &frame) {
+                case .err(let err):
+                    print_err(err, #function)
+                    return
+                case .success:
+                    break
+                }
+                switch stream.type {
+                case AVMEDIA_TYPE_VIDEO:
+                    guard let data = frame.videoData(stream.time_base) else {
+                        continue
+                    }
+                    self.videoQueue?.append(data: data)
+                case AVMEDIA_TYPE_AUDIO:
+                    
+                    guard let data = frame.audioData(stream.time_base) else {
+                        continue
+                    }
+                default:
+                    continue
+                }
+                
             }
         }
+    }
+    
+    public func pause() {
         
+    }
+    
+    public func stop() {
+        
+    }
+    
+    public func requestFrame(timestamp: Double) -> PlayerDecoded {
+        self.decodeLock.wait()
+        defer {
+            self.decodeLock.signal()
+        }
+        if let data = self.videoQueue?.request(timestamp: timestamp) {
+            return .video(data)
+        }
         return .unknown
+    }
+}
+
+enum PlayerDecoded {
+    case audio(AudioData)
+    case video(VideoData)
+    case unknown
+    case finish
+}
+
+fileprivate struct Queue<Data: MediaTimeDatable> {
+    
+    let maxQueueCount: Int
+    let framePeriod: Double
+    
+    var full: Bool {
+        return maxQueueCount <= self.queue.count
+    }
+    
+    var queue: [Data]
+    init(maxQueueCount: Int, framePeriod: Double) {
+        self.maxQueueCount = maxQueueCount
+        self.framePeriod = framePeriod
+        self.queue = []
+    }
+    
+    mutating func clear() {
+        self.queue.removeAll(keepingCapacity: true)
+    }
+    
+    mutating func append(data: Data) {
+        self.queue.append(data)
+    }
+    
+    mutating func request(timestamp: Double) -> Data? {
+        let filtered = self.queue.filter({$0.time > timestamp - framePeriod})
+        self.queue = filtered
+        guard let firstData = self.queue.first else {
+            return nil
+        }
+        if firstData.time <= timestamp + framePeriod {
+            self.queue.removeFirst()
+        }
+        return firstData
     }
 }

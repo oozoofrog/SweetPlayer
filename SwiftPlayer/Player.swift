@@ -15,9 +15,13 @@ class Player {
     let path: String
     let format: SweetFormat
     
+    private var audioHelper: MediaHelper?
     private var videoQueue: Queue<VideoData>?
     
     private var quit: Bool = false
+    public var isFinished: Bool {
+        return self.quit && true == self.videoQueue?.isEmpty ?? true
+    }
     private var decodeQueue: DispatchQueue = DispatchQueue(label: "com.sweetplayer.player.decode")
     private let decodeLock: DispatchSemaphore = DispatchSemaphore(value: 1)
     
@@ -39,6 +43,12 @@ class Player {
         if let fps = self.video?.fps {
             self.videoQueue = Queue(maxQueueCount: 16, framePeriod: 1.0 / fps)
         }
+        if let audio = self.audio {
+            let audioHelper = MediaHelper()
+            if audioHelper.setupAudio(forAudioStream: audio) {
+                self.audioHelper = audioHelper
+            }
+        }
     }
     
     deinit {
@@ -46,11 +56,11 @@ class Player {
     }
     
     var video: SweetStream? {
-        return self.format.stream(forType: AVMEDIA_TYPE_VIDEO, at: Int32(self.playVideoStreamAt))
+        return self.format.stream(forType: AVMEDIA_TYPE_VIDEO, at: self.playVideoStreamAt)
     }
     
     var audio: SweetStream? {
-        return self.format.stream(forType: AVMEDIA_TYPE_AUDIO, at: Int32(self.playAudioStreamAt))
+        return self.format.stream(forType: AVMEDIA_TYPE_AUDIO, at: self.playAudioStreamAt)
     }
     
     var videoSize: CGSize {
@@ -110,7 +120,6 @@ class Player {
         self.decodeQueue.async {
             
             defer {
-                print("decoding finished")
                 self.quit = true
             }
             var packet: AVPacket = AVPacket()
@@ -152,10 +161,10 @@ class Player {
                     guard let data = frame.audioData(stream.time_base) else {
                         continue
                     }
+                    self.audioHelper?.audioPlay(data)
                 default:
                     continue
                 }
-                
             }
         }
     }
@@ -167,8 +176,8 @@ class Player {
     public func stop() {
         
     }
-    
-    public func requestFrame(timestamp: Double) -> PlayerDecoded {
+
+    public func requestVideoFrame(timestamp: Double) -> PlayerDecoded {
         self.decodeLock.wait()
         defer {
             self.decodeLock.signal()
@@ -194,6 +203,10 @@ fileprivate struct Queue<Data: MediaTimeDatable> {
     
     var full: Bool {
         return maxQueueCount <= self.queue.count
+    }
+    
+    var isEmpty: Bool {
+        return self.queue.count == 0
     }
     
     var queue: [Data]

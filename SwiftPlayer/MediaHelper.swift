@@ -19,7 +19,13 @@ class MediaHelper {
     static var defaultChannels: Int32 {
         return Int32(self.audioDefaultFormat.channelCount)
     }
-    func setupAudio() -> Bool{
+    
+    func setupAudio(forAudioStream stream: SweetStream? = nil) -> Bool{
+        if let stream = stream {
+            guard stream.setupAudioFilter(44100, outSampleFmt: AV_SAMPLE_FMT_FLT, outChannels: 2) else {
+                return false
+            }
+        }
         self.engine = AVAudioEngine()
         self.player = AVAudioPlayerNode()
         

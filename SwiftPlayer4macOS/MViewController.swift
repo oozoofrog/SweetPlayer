@@ -68,20 +68,15 @@ public class MViewController: NSViewController, MTKViewDelegate {
         } else {
             self.mtkView.delegate = nil
             self.player?.stop()
-            self.timestamp = 0
         }
     }
     
     public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         self.view.window?.aspectRatio = AVMakeRect(aspectRatio: self.player?.videoSize ?? size, insideRect: CGRect(origin: CGPoint(), size: size)).size
     }
-    var timestamp: Double = 0
+    
     public func draw(in view: MTKView) {
-        let timestamp = CFAbsoluteTimeGetCurrent()
-        if 0 == self.timestamp {
-            self.timestamp = timestamp
-        }
-        switch self.player?.requestVideoFrame(timestamp: timestamp - self.timestamp) {
+        switch self.player?.requestVideoFrame() {
         case .video(let data)?:
             self.movie.render(view: view, data: data)
         default:

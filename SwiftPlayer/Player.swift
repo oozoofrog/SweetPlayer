@@ -131,15 +131,18 @@ class Player {
     
     public func stop() {
         self.decodeLock.wait()
+        self.timestamp = 0
         self.quit = true
         self.videoQueue?.clear()
         self.format.seek()
+        self.audioHelper?.stop()
         self.decodeLock.signal()
     }
     
     public func start() {
         self.decodeLock.wait()
         self.quit = false
+        self.audioHelper?.start()
         self.decodeLock.signal()
         self.decodeQueue.async {
             
@@ -148,7 +151,6 @@ class Player {
  
             self.video?.flush()
             self.audio?.flush()
-            
             while true {
                 self.decodeLock.wait()
                 defer {
@@ -182,7 +184,6 @@ class Player {
                     guard let data = frame.videoData(stream.time_base), false == self.quit else {
                         continue
                     }
-                    print(data.time)
                     self.videoQueue?.append(data: data)
                 case AVMEDIA_TYPE_AUDIO:
                     
@@ -196,13 +197,22 @@ class Player {
             }
         }
     }
+    
+    var timestamp: Double = 0
+    var timeprogress: Double {
+        let currentTimestamp = CFAbsoluteTimeGetCurrent()
+        if 0 == self.timestamp {
+            self.timestamp = currentTimestamp
+        }
+        return currentTimestamp - self.timestamp
+    }
 
-    public func requestVideoFrame(timestamp: Double) -> PlayerDecoded {
+    public func requestVideoFrame() -> PlayerDecoded {
         self.decodeLock.wait()
         defer {
             self.decodeLock.signal()
         }
-        if let data = self.videoQueue?.request(timestamp: timestamp) {
+        if let data = self.videoQueue?.request(timestamp: self.timeprogress) {
             return .video(data)
         }
         return .unknown

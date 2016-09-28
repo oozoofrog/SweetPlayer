@@ -51,4 +51,11 @@ class MediaHelper {
         self.player?.scheduleBuffer(data.pcmBuffer, completionHandler:nil)
     }
     
+    func start() {
+        self.player?.play()
+    }
+    
+    func stop() {
+        self.player?.stop()
+    }
 }

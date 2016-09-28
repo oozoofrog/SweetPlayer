@@ -9,87 +9,29 @@
 import AppKit
 import MetalKit
 import AVFoundation
+import SmoothFFmpeg
 
-extension Data {
-    func chars() -> [UInt8] {
-        var chars: [UInt8] = [UInt8](repeating: 0, count: self.count)
-        self.copyBytes(to: &chars, count: self.count)
-        return chars
-    }
-}
-
-public class MViewController: NSViewController, MTKViewDelegate {
+public class MViewController: NSViewController {
     
-    var player: Player?
-    
-    
-    @IBOutlet var mtkView: MTKView!
-    var movie: Movie!
+    @IBOutlet var playerView: PlayerView!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        guard let path = Bundle.main.path(forResource: "sample", ofType: "mp4") else {
-            assertionFailure()
-            return
-        }
-        guard let player = Player(path: path) else {
-            assertionFailure()
-            return
-        }
-        
-        self.player = player
-        
-        guard let video = self.player?.video else {
-            return
-        }
-        
-        self.mtkView.device = MTLCreateSystemDefaultDevice()
-        self.mtkView.colorPixelFormat = .bgra8Unorm_srgb
-//        let frameRate = Int(self.player?.fps ?? 0)
-//        self.mtkView.preferredFramesPerSecond = frameRate == 0 ? 10 : frameRate
-        self.mtkView.clearColor = MTLClearColorMake(0, 0, 0, 1)
-        self.mtkView.delegate = self
-        self.mtkView.currentRenderPassDescriptor?.colorAttachments[0].storeAction = .store
-        self.mtkView.currentRenderPassDescriptor?.colorAttachments[0].loadAction = .clear
-        
-        self.movie = Movie(device: self.mtkView.device!, pixelFormat: self.mtkView.colorPixelFormat, colorMatrix: video.colorSpace.matrix, videoRatio: video.videoSize, screenRatio: self.view.bounds.size)
-        self.view.window?.aspectRatio = AVMakeRect(aspectRatio: self.player?.videoSize ?? view.bounds.size, insideRect: CGRect(origin: CGPoint(), size: view.bounds.size)).size
     }
     
     public override func viewDidAppear() {
         super.viewDidAppear()
-        
-        self.player?.start()
+        guard let path = Bundle.main.path(forResource: "sample", ofType: "mp4") else {
+            assertionFailure()
+            return
+        }
+        self.playerView?.play(path: path)
     }
     @IBAction func click(_ sender: AnyObject) {
-        if self.player?.isFinished ?? false {
-            self.player?.start()
-            self.mtkView.delegate = self
+        if self.playerView?.isFinished ?? false {
+            self.playerView?.play()
         } else {
-            self.mtkView.delegate = nil
-            self.player?.stop()
-            self.timestamp = 0
+            self.playerView?.stop()
         }
-    }
-    
-    public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-        self.view.window?.aspectRatio = AVMakeRect(aspectRatio: self.player?.videoSize ?? size, insideRect: CGRect(origin: CGPoint(), size: size)).size
-    }
-    var timestamp: Double = 0
-    public func draw(in view: MTKView) {
-        let timestamp = CFAbsoluteTimeGetCurrent()
-        if 0 == self.timestamp {
-            self.timestamp = timestamp
-        }
-        switch self.player?.requestVideoFrame(timestamp: timestamp - self.timestamp) {
-        case .video(let data)?:
-            self.movie.render(view: view, data: data)
-        default:
-            break
-        }
-    }
-    
-    deinit {
-        avformat_network_deinit()
     }
 }

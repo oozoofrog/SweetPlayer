@@ -28,7 +28,12 @@ class Player {
     }
     private var quit: Bool = false
     public var isFinished: Bool {
-        return self.quit && true == self.videoQueue?.isEmpty ?? true
+        self.decodeLock.wait()
+        let finished = self.quit
+        let empty = self.videoQueue?.isEmpty ?? true
+        self.decodeLock.signal()
+        
+        return finished && empty
     }
     private var decodeQueue: DispatchQueue = DispatchQueue(label: "com.sweetplayer.player.decode")
     private let decodeLock: DispatchSemaphore = DispatchSemaphore(value: 1)
@@ -128,28 +133,29 @@ class Player {
         self.decodeLock.wait()
         self.quit = true
         self.videoQueue?.clear()
+        self.format.seek()
         self.decodeLock.signal()
     }
     
     public func start() {
+        self.decodeLock.wait()
         self.quit = false
+        self.decodeLock.signal()
         self.decodeQueue.async {
-            
-            defer {
-                self.video?.flush()
-                self.audio?.flush()
-                self.quit = true
-            }
             
             var packet: AVPacket = AVPacket()
             var frame: AVFrame = AVFrame()
+ 
+            self.video?.flush()
+            self.audio?.flush()
             
-            self.format.seek()
-            
-            while false == self.quit {
+            while true {
                 self.decodeLock.wait()
                 defer {
                     self.decodeLock.signal()
+                }
+                if self.quit {
+                    break
                 }
                 if self.videoQueue?.full ?? false || self.quit {
                     continue
@@ -176,6 +182,7 @@ class Player {
                     guard let data = frame.videoData(stream.time_base), false == self.quit else {
                         continue
                     }
+                    print(data.time)
                     self.videoQueue?.append(data: data)
                 case AVMEDIA_TYPE_AUDIO:
                     

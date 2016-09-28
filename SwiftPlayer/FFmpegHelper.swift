@@ -54,8 +54,11 @@ extension AVFrame {
     }
     
     mutating func audioData(_ time_base: AVRational) -> AudioData? {
+        guard let bytes = self.data.0 else {
+            return nil
+        }
         let format = MediaHelper.audioDefaultFormat
-        return AudioData(data: Data(bytes: self.data.0!, count: Int(linesize.0)), format: format, bufferSize: Int(linesize.0), sampleSize: Int(nb_samples), pts: av_frame_get_best_effort_timestamp(&self), dur: self.pkt_duration, time_base: time_base)
+        return AudioData(data: Data(bytes: bytes, count: Int(linesize.0)), format: format, bufferSize: Int(linesize.0), sampleSize: Int(nb_samples), pts: av_frame_get_best_effort_timestamp(&self), dur: self.pkt_duration, time_base: time_base)
     }
 }
 
@@ -262,11 +265,12 @@ class SweetStream: CustomStringConvertible {
     }
     
     func flush() {
-        print_err(avcodec_send_packet(codec, nil), #function)
+        avcodec_flush_buffers(self.codec)
     }
     
     deinit {
         flush()
+        avcodec_send_packet(self.codec, nil)
         avcodec_free_context(&codec)
     }
     

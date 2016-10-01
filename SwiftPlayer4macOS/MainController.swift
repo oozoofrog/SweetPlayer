@@ -13,25 +13,31 @@ class MainController: NSViewController, NSOpenSavePanelDelegate {
 
     @IBOutlet var playerView: PlayerView!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        self.view.wantsLayer = true
+        
+        let bg: NSColor = NSColor(colorLiteralRed: 235 / 255.0, green: 82 / 255.0, blue: 63 / 255.0, alpha: 1.0)
+        self.view.layer?.backgroundColor = bg.cgColor
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let layer = CALayer()
-        layer.backgroundColor = NSColor.black.cgColor
-        self.view.layer = layer
-        
+    }
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        self.view.window?.titlebarAppearsTransparent = true
     }
     
     override func viewDidAppear() {
         super.viewDidAppear()
+        self.view.window?.title = "SweetPlayer"
         
-        self.open()
+      //  self.open()
     }
-    
-    override func viewWillLayout() {
-        super.viewWillLayout()
-        self.view.layer?.frame = self.view.bounds
-    }
- 
+     
     //MARK: - Actions
     
     func open() {

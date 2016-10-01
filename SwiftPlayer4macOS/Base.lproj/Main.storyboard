@@ -688,9 +688,15 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="PUV-i6-7W4" customClass="PlayerView" customModule="SmoothFFmpeg">
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                             </customView>
+                            <progressIndicator wantsLayer="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="xee-8g-ZXK">
+                                <rect key="frame" x="0.0" y="281" width="450" height="20"/>
+                            </progressIndicator>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="PUV-i6-7W4" secondAttribute="bottom" id="LAH-cP-oLV"/>
+                            <constraint firstItem="xee-8g-ZXK" firstAttribute="top" secondItem="wfW-Zr-hMO" secondAttribute="top" id="dk6-NX-Z1H"/>
+                            <constraint firstAttribute="trailing" secondItem="xee-8g-ZXK" secondAttribute="trailing" id="eOG-bE-2hu"/>
+                            <constraint firstItem="xee-8g-ZXK" firstAttribute="leading" secondItem="wfW-Zr-hMO" secondAttribute="leading" id="gRx-8J-uO9"/>
                             <constraint firstAttribute="trailing" secondItem="PUV-i6-7W4" secondAttribute="trailing" id="ihF-8G-iry"/>
                             <constraint firstItem="PUV-i6-7W4" firstAttribute="top" secondItem="wfW-Zr-hMO" secondAttribute="top" id="lEs-U4-clB"/>
                             <constraint firstItem="PUV-i6-7W4" firstAttribute="leading" secondItem="wfW-Zr-hMO" secondAttribute="leading" id="zwy-FE-uZr"/>
@@ -698,6 +704,7 @@
                     </view>
                     <connections>
                         <outlet property="playerView" destination="PUV-i6-7W4" id="im4-Yu-SOY"/>
+                        <outlet property="progressView" destination="xee-8g-ZXK" id="aX3-ez-iC0"/>
                     </connections>
                 </viewController>
                 <customObject id="ggB-E2-HV9" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

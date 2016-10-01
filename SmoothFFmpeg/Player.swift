@@ -11,6 +11,8 @@ import AVFoundation
 import Accelerate
 import ffmpeg
 
+public typealias PlayerProgressHandle = (_ player: Player, _ progress: Double) -> Void
+
 public class Player: CustomDebugStringConvertible {
     
     public var debugDescription: String {
@@ -19,6 +21,7 @@ public class Player: CustomDebugStringConvertible {
     
     let path: String
     let format: SweetFormat
+    public var progressHandle: PlayerProgressHandle?
     
     private var audioHelper: MediaHelper?
     private var videoQueue: Queue<VideoData>?
@@ -43,7 +46,7 @@ public class Player: CustomDebugStringConvertible {
     private var decodeQueue: DispatchQueue = DispatchQueue(label: "com.sweetplayer.player.decode")
     private let decodeLock: DispatchSemaphore = DispatchSemaphore(value: 1)
     
-    public init?(path: String) {
+    public init?(path: String, progressHandle: PlayerProgressHandle? = nil) {
         self.path = path
         av_register_all()
         avformat_network_init()
@@ -52,6 +55,7 @@ public class Player: CustomDebugStringConvertible {
         }
         self.format = format
         self.initialize()
+        self.progressHandle = progressHandle
     }
     
     private func initialize() {
@@ -94,6 +98,16 @@ public class Player: CustomDebugStringConvertible {
     
     public var duration: Double {
         return self.format.duration
+    }
+    
+    public var currentTime: Double = 0 {
+        didSet {
+            self.progressHandle?(self, self.progress)
+        }
+    }
+    
+    public var progress: Double {
+        return currentTime / duration
     }
     
     var videoStreamIndex: Int32 = -1
@@ -223,6 +237,7 @@ public class Player: CustomDebugStringConvertible {
             self.decodeLock.signal()
         }
         if let data = self.videoQueue?.request(timestamp: self.timeprogress) {
+            self.currentTime = data.time
             return .video(data)
         }
         return .unknown

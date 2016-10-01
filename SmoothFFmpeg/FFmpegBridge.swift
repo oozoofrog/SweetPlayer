@@ -91,9 +91,11 @@ extension AVMediaType: Hashable {
     }
 }
 
+//MARK: - SweetFormat
 class SweetFormat: CustomDebugStringConvertible {
     
     var debugDescription: String {
+        av_dump_format(self.formatContext, -1, self.path, 0)
         let description = "path: \(self.path)\nduration: \(self.duration)"
         return self.streams.reduce(description, { (desc, stream) -> String in
             return desc + "\n" + stream.debugDescription

@@ -12,6 +12,7 @@ import SmoothFFmpeg
 class MainController: NSViewController, NSOpenSavePanelDelegate {
 
     @IBOutlet var playerView: PlayerView!
+    @IBOutlet var progressView: NSProgressIndicator!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,6 +21,9 @@ class MainController: NSViewController, NSOpenSavePanelDelegate {
         
         let bg: NSColor = NSColor(colorLiteralRed: 235 / 255.0, green: 82 / 255.0, blue: 63 / 255.0, alpha: 1.0)
         self.view.layer?.backgroundColor = bg.cgColor
+        
+        self.progressView.minValue = 0.0
+        self.progressView.maxValue = 1.0
     }
     
     override func viewDidLoad() {
@@ -59,6 +63,8 @@ class MainController: NSViewController, NSOpenSavePanelDelegate {
     }
     
     func panel(_ sender: Any, validate url: URL) throws {
-        let _ = playerView.play(path: url.absoluteString)
+        let _ = playerView.play(path: url.absoluteString) { _, progress in
+            self.progressView.doubleValue = progress
+        }
     }
 }

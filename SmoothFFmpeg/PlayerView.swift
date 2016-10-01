@@ -12,7 +12,7 @@ import AVFoundation
 
 public class PlayerView: MTKView, MTKViewDelegate {
     
-    var player: Player?
+    private(set) public var player: Player?
     var movie: Movie?
     
     public var path: String?
@@ -40,10 +40,10 @@ public class PlayerView: MTKView, MTKViewDelegate {
     }
     #endif
     
-    public func play(path: String = "") -> Bool {
+    public func play(path: String = "", progressHandle: PlayerProgressHandle? = nil) -> Bool {
         if nil == self.player {
             self.path = path
-            guard let player = Player(path: path) else {
+            guard let player = Player(path: path, progressHandle: progressHandle) else {
                 assertionFailure()
                 return false
             }

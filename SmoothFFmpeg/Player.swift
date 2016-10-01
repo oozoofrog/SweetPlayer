@@ -152,6 +152,11 @@ public class Player: CustomDebugStringConvertible {
         return self.format.streamsByType[AVMEDIA_TYPE_VIDEO]
     }
     
+    public func seek(seek: Double) {
+        self.startTime = seek
+        self.format.seek(seek: seek)
+    }
+    
     public func stop() {
         self.decodeLock.wait()
         self.timestamp = 0
@@ -222,11 +227,12 @@ public class Player: CustomDebugStringConvertible {
         }
     }
     
-    var timestamp: Double = 0
+    var timestamp: CFAbsoluteTime = 0
+    var startTime: CFAbsoluteTime = 0
     var timeprogress: Double {
         let currentTimestamp = CFAbsoluteTimeGetCurrent()
         if 0 == self.timestamp {
-            self.timestamp = currentTimestamp
+            self.timestamp = currentTimestamp - startTime
         }
         return currentTimestamp - self.timestamp
     }

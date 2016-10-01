@@ -40,14 +40,19 @@ public class PlayerView: MTKView, MTKViewDelegate {
     }
     #endif
     
-    public func play(path: String = "", progressHandle: PlayerProgressHandle? = nil) -> Bool {
-        if nil == self.player {
-            self.path = path
-            guard let player = Player(path: path, progressHandle: progressHandle) else {
-                assertionFailure()
-                return false
-            }
-            self.player = player
+    public func setup(path: String = "", progressHandle: PlayerProgressHandle? = nil) -> Bool {
+        self.path = path
+        guard let player = Player(path: path, progressHandle: progressHandle) else {
+            assertionFailure()
+            return false
+        }
+        self.player = player
+        return true
+    }
+    
+    public func play() -> Bool {
+        if nil == self.movie {
+
             Swift.print(String(describing: player))
             if let video = self.player?.video {
                 guard let device = self.device else {

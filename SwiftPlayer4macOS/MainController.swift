@@ -63,8 +63,12 @@ class MainController: NSViewController, NSOpenSavePanelDelegate {
     }
     
     func panel(_ sender: Any, validate url: URL) throws {
-        let _ = playerView.play(path: url.absoluteString) { _, progress in
+        guard playerView.setup(path: url.absoluteString, progressHandle: { (player, progress) in
             self.progressView.doubleValue = progress
+        }), let player = playerView.player else {
+            return
         }
+        playerView.player?.seek(seek: player.duration / 2.0)
+        let _ = playerView.play()
     }
 }

@@ -149,8 +149,10 @@ class SweetFormat: CustomDebugStringConvertible {
         avformat_close_input(&formatContext)
     }
     
-    func seek() {
-        print_err(av_seek_frame(self.formatContext, -1, 0, AV_TIME_BASE), #function)
+    func seek(seek: Double = 0) {
+        let start: Int64 = Int64(seek * Double(AV_TIME_BASE))
+        print(#function + " -> \(start)")
+        print_err(av_seek_frame(self.formatContext, -1, start, 0), #function)
     }
     
     func streams(forType type: AVMediaType) -> [SweetStream]? {

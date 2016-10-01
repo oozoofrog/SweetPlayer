@@ -232,7 +232,7 @@ public class Player: CustomDebugStringConvertible {
     var timeprogress: Double {
         let currentTimestamp = CFAbsoluteTimeGetCurrent()
         if 0 == self.timestamp {
-            self.timestamp = currentTimestamp - startTime
+            self.timestamp = currentTimestamp - startTime - 5.0
         }
         return currentTimestamp - self.timestamp
     }
@@ -242,7 +242,8 @@ public class Player: CustomDebugStringConvertible {
         defer {
             self.decodeLock.signal()
         }
-        if let data = self.videoQueue?.request(timestamp: self.timeprogress) {
+        let time = self.timeprogress
+        if let data = self.videoQueue?.request(timestamp: time) {
             self.currentTime = data.time
             return .video(data)
         }

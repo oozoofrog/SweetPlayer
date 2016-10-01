@@ -1,5 +1,10 @@
 # SweetPlayer 
 
+###2016.10.01
+- create SmoothFFmpeg framework
+- add progress
+- add seeking function
+
 ###2016.09.13
 - moved from [ffmpeg-swift-tutorial](https://github.com/singcodes/ffmpeg-swift-tutorial)
 

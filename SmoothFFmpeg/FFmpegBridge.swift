@@ -151,7 +151,6 @@ class SweetFormat: CustomDebugStringConvertible {
     
     func seek(seek: Double = 0) {
         let start: Int64 = Int64(seek * Double(AV_TIME_BASE))
-        print(#function + " -> \(start)")
         print_err(av_seek_frame(self.formatContext, -1, start, 0), #function)
     }
     

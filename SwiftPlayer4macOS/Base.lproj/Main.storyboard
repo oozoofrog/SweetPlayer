@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11521.1" systemVersion="16B2333a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2333a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11521.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -688,8 +688,15 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="PUV-i6-7W4" customClass="PlayerView" customModule="SmoothFFmpeg">
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                             </customView>
-                            <progressIndicator wantsLayer="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="xee-8g-ZXK">
+                            <progressIndicator wantsLayer="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="xee-8g-ZXK" customClass="ProgressView" customModule="SwiftPlayer4macOS" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="281" width="450" height="20"/>
+                                <gestureRecognizers>
+                                    <clickGestureRecognizer delaysPrimaryMouseButtonEvents="YES" numberOfClicksRequired="1" id="6lg-VN-h9h">
+                                        <connections>
+                                            <action selector="clickProgress:" target="F9l-fm-Ed8" id="YEp-uL-hjW"/>
+                                        </connections>
+                                    </clickGestureRecognizer>
+                                </gestureRecognizers>
                             </progressIndicator>
                         </subviews>
                         <constraints>

@@ -10,6 +10,8 @@ import Foundation
 import AVFoundation
 import ffmpeg
 
+public let TIME_CONSTANT: Double = Double(5000) / Double(NSEC_PER_MSEC) // AV_TIME_BASE == NSEC_PER_MSEC
+
 extension AVFrame {
     mutating func videoData(_ time_base: AVRational, isRGB24: Bool = false) -> VideoData? {
         

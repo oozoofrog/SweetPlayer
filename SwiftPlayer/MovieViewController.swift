@@ -63,8 +63,4 @@ class MovieViewController: UIViewController, MTKViewDelegate {
         }
         self.movie.render(view: view, data: videoData)
     }
-    
-    deinit {
-        avformat_network_deinit()
-    }
 }

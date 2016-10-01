@@ -10,7 +10,7 @@ import Cocoa
 import SmoothFFmpeg
 
 class MainController: NSViewController, NSOpenSavePanelDelegate {
-
+    
     @IBOutlet var playerView: PlayerView!
     @IBOutlet var progressView: NSProgressIndicator!
     
@@ -39,9 +39,13 @@ class MainController: NSViewController, NSOpenSavePanelDelegate {
         super.viewDidAppear()
         self.view.window?.title = "SweetPlayer"
         
-      //  self.open()
+        //  self.open()
     }
-     
+    
+    @IBAction func clickProgress(_ sender: NSClickGestureRecognizer) {
+        let p = Double(sender.location(in: sender.view).x / self.view.bounds.width)
+        self.playerView.player?.seek(seek: self.playerView.player?.time(fromProgress: p) ?? 0)
+    }
     //MARK: - Actions
     
     func open() {
@@ -65,10 +69,45 @@ class MainController: NSViewController, NSOpenSavePanelDelegate {
     func panel(_ sender: Any, validate url: URL) throws {
         guard playerView.setup(path: url.absoluteString, progressHandle: { (player, progress) in
             self.progressView.doubleValue = progress
-        }), let player = playerView.player else {
+        }) else {
             return
         }
-        playerView.player?.seek(seek: player.duration / 2.0)
         let _ = playerView.play()
+    }
+}
+
+class ProgressView: NSProgressIndicator {
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+    }
+    
+    var entered: Bool = false
+    override func mouseEntered(with event: NSEvent) {
+        if false == entered {
+            entered = true
+            NSAnimationContext.runAnimationGroup({ (ctx) in
+                ctx.duration = 2
+                self.layer?.transform = CATransform3DConcat(CATransform3DMakeTranslation(0, -self.bounds.size.height / 3, 0), CATransform3DMakeScale(1, 2.0, 1))
+                }, completionHandler: nil)
+        }
+    }
+    
+    override func mouseExited(with event: NSEvent) {
+        if entered {
+            entered = false
+            NSAnimationContext.runAnimationGroup({ (ctx) in
+                ctx.duration = 2
+                self.layer?.transform = CATransform3DIdentity
+                }, completionHandler: nil)
+        }
+    }
+    var trackingArea: NSTrackingArea? = nil
+    override func updateTrackingAreas() {
+        if let area = self.trackingArea {
+            self.removeTrackingArea(area)
+        }
+        self.addTrackingArea(NSTrackingArea(rect: self.bounds, options: [.mouseEnteredAndExited, .activeAlways], owner: self, userInfo: nil))
     }
 }

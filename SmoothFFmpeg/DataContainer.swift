@@ -11,7 +11,7 @@ import AVFoundation
 import Accelerate
 import ffmpeg
 
-public protocol MediaTimeDatable {
+public protocol MediaTimeDatable: CustomDebugStringConvertible {
     var pts: Int64 { get }
     var dur: Int64 { get }
     var end: Int64 { get }
@@ -21,6 +21,11 @@ public protocol MediaTimeDatable {
 }
 
 extension MediaTimeDatable {
+    
+    public var debugDescription: String {
+        return "Data -> \(self.time)"
+    }
+    
     public var end: Int64 {
         return dur + pts == Int64.min ? 0 : pts
     }

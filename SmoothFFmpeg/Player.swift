@@ -152,16 +152,47 @@ public class Player: CustomDebugStringConvertible {
         return self.format.streamsByType[AVMEDIA_TYPE_VIDEO]
     }
     
+    private var seeking: Bool = false
+    public var isSeeking: Bool {
+        var isSeeking: Bool = false
+        seekingQueue.sync { [weak self] in
+            isSeeking = self?.seeking ?? false
+        }
+        return isSeeking
+    }
+    private let seekingQueue: DispatchQueue = DispatchQueue(label: "com.SweetPlayer.player.seeking", qos: DispatchQoS.userInteractive)
+    private func seekingLock() {
+        seekingQueue.sync { [weak self] in
+            self?.seeking = true
+        }
+    }
+    private func seekingUnlock() {
+        seekingQueue.sync {
+            [weak self] in
+            self?.seeking = false
+        }
+    }
     public func seek(seek: Double) {
+        self.seekingLock()
+        defer {
+            self.seekingUnlock()
+        }
+        self.timestamp = 0
         self.startTime = seek
+        self.videoQueue?.reset()
+        self.format.streams.forEach{$0.flush()}
         self.format.seek(seek: seek)
+    }
+    
+    public func time(fromProgress: Double) -> CFTimeInterval {
+        return self.duration * fromProgress + TIME_CONSTANT
     }
     
     public func stop() {
         self.decodeLock.wait()
         self.timestamp = 0
         self.quit = true
-        self.videoQueue?.clear()
+        self.videoQueue?.reset()
         self.format.seek()
         self.audioHelper?.stop()
         self.decodeLock.signal()
@@ -181,6 +212,9 @@ public class Player: CustomDebugStringConvertible {
             self.audio?.flush()
 
             while true {
+                if self.isSeeking {
+                    continue
+                }
                 self.decodeLock.wait()
                 defer {
                     self.decodeLock.signal()
@@ -232,7 +266,7 @@ public class Player: CustomDebugStringConvertible {
     var timeprogress: Double {
         let currentTimestamp = CFAbsoluteTimeGetCurrent()
         if 0 == self.timestamp {
-            self.timestamp = currentTimestamp - startTime - 5.0
+            self.timestamp = currentTimestamp - startTime
         }
         return currentTimestamp - self.timestamp
     }
@@ -278,7 +312,7 @@ fileprivate struct Queue<Data: MediaTimeDatable> {
         self.queue = []
     }
     
-    mutating func clear() {
+    mutating func reset() {
         self.queue.removeAll(keepingCapacity: true)
     }
     

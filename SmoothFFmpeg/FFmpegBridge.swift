@@ -91,7 +91,27 @@ extension AVMediaType: Hashable {
     }
 }
 
-class SweetFormat {
+class SweetFormat: CustomDebugStringConvertible {
+    
+    var debugDescription: String {
+        let description = "path: \(self.path)\nduration: \(self.duration)"
+        return self.streams.reduce(description, { (desc, stream) -> String in
+            return desc + "\n" + stream.debugDescription
+        })
+    }
+    
+    public var duration: Double {
+        guard let d = self.formatContext?.pointee.duration else {
+            return 0
+        }
+        if IS_NO_PTS_VALUE(d) {
+            return 0
+        }
+        
+        let duration = Double(d + (d <= Int64.max - 5000 ? 5000 : 0));
+        return duration / Double(AV_TIME_BASE)
+    }
+    
     var formatContext: UnsafeMutablePointer<AVFormatContext>?
     let path: String
     fileprivate(set) var streamsByType: [AVMediaType: [SweetStream]] = [AVMediaType:[SweetStream]]()
@@ -172,11 +192,12 @@ class SweetFormat {
     }
 }
 
-public class SweetStream: CustomStringConvertible {
+//MARK: - SweetStream
+public class SweetStream: CustomDebugStringConvertible {
     
-    public var description: String {
+    public var debugDescription: String {
         let codecpar = self.stream.pointee.codecpar.pointee
-        return "codec: \(codecpar.codec_id), media_type: \(codecpar.codec_type), color_primaries: \(codecpar.color_primaries), color_space: \(codecpar.color_space)"
+        return "codec: \(codecpar.codec_id)\n\tmedia_type: \(codecpar.codec_type)\n\tcolor_primaries: \(codecpar.color_primaries)\n\tcolor_space: \(codecpar.color_space)"
     }
     
     let format: UnsafeMutablePointer<AVFormatContext>

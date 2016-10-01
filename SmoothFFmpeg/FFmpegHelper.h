@@ -27,6 +27,8 @@ BOOL av_success_desc(int ret, const char* desc);
 BOOL isErr(int err, const char* desc);
 void print_err(int err, const char* desc);
 
+BOOL IS_NO_PTS_VALUE(int64_t value);
+
 int AVERROR_CONVERT(int err);
 BOOL IS_AVERROR_EOF(int err);
 

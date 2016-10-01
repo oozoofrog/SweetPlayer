@@ -48,7 +48,7 @@ public class PlayerView: MTKView, MTKViewDelegate {
                 return false
             }
             self.player = player
-            
+            Swift.print(String(describing: player))
             if let video = self.player?.video {
                 guard let device = self.device else {
                     assertionFailure()

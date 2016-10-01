@@ -11,7 +11,11 @@ import AVFoundation
 import Accelerate
 import ffmpeg
 
-public class Player {
+public class Player: CustomDebugStringConvertible {
+    
+    public var debugDescription: String {
+        return self.format.debugDescription
+    }
     
     let path: String
     let format: SweetFormat
@@ -86,6 +90,10 @@ public class Player {
     
     public var fps: Double {
         return self.format.stream(forType: AVMEDIA_TYPE_VIDEO)?.fps ?? 0.0
+    }
+    
+    public var duration: Double {
+        return self.format.duration
     }
     
     var videoStreamIndex: Int32 = -1

@@ -25,6 +25,10 @@ Test* alloc_test() {
     return test;
 }
 
+BOOL IS_NO_PTS_VALUE(int64_t value) {
+    return value == AV_NOPTS_VALUE;
+}
+
 BOOL av_success(int ret) {
     if (0 <= ret) {
         return YES;

@@ -66,7 +66,6 @@
 		D832355F1D7465E5008689D5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D832355E1D7465E5008689D5 /* libz.tbd */; };
 		D83235611D7465EC008689D5 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D83235601D7465EC008689D5 /* libbz2.tbd */; };
 		D83235631D7465F3008689D5 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D83235621D7465F3008689D5 /* libiconv.tbd */; };
-		D83B5F821D955BE500E731DF /* MViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83B5F811D955BE500E731DF /* MViewController.swift */; };
 		D848FE771D745F4D0058E322 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D848FE761D745F4D0058E322 /* AppDelegate.swift */; };
 		D848FE7C1D745F4D0058E322 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D848FE7A1D745F4D0058E322 /* Main.storyboard */; };
 		D848FE7E1D745F4D0058E322 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D848FE7D1D745F4D0058E322 /* Assets.xcassets */; };
@@ -82,6 +81,7 @@
 		D8A469A31D97DE200016A3A8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A469A21D97DE200016A3A8 /* QuartzCore.framework */; };
 		D8BF260F1D9550EB00D8835D /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BF260E1D9550EB00D8835D /* MovieViewController.swift */; };
 		D8C5B09E1D9409EB009E541B /* cube.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C5B09D1D9409EB009E541B /* cube.png */; };
+		D8EAB80B1D9FA5B7005A03D3 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EAB80A1D9FA5B7005A03D3 /* MainController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,7 +194,6 @@
 		D832355E1D7465E5008689D5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D83235601D7465EC008689D5 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		D83235621D7465F3008689D5 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
-		D83B5F811D955BE500E731DF /* MViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MViewController.swift; sourceTree = "<group>"; };
 		D848FE731D745F4D0058E322 /* SwiftPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D848FE761D745F4D0058E322 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D848FE7B1D745F4D0058E322 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -213,6 +212,7 @@
 		D8A469A21D97DE200016A3A8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D8BF260E1D9550EB00D8835D /* MovieViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
 		D8C5B09D1D9409EB009E541B /* cube.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cube.png; path = SwiftPlayer4macOS/cube.png; sourceTree = "<group>"; };
+		D8EAB80A1D9FA5B7005A03D3 /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -325,7 +325,7 @@
 			children = (
 				D878AD061D980D420062D75A /* CVDisplay.swift */,
 				D82223D61D89611300E60EB0 /* AppDelegate.swift */,
-				D83B5F811D955BE500E731DF /* MViewController.swift */,
+				D8EAB80A1D9FA5B7005A03D3 /* MainController.swift */,
 				D82223DA1D89611300E60EB0 /* Assets.xcassets */,
 				D82223DC1D89611300E60EB0 /* Main.storyboard */,
 				D82223DF1D89611300E60EB0 /* Info.plist */,
@@ -612,8 +612,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8EAB80B1D9FA5B7005A03D3 /* MainController.swift in Sources */,
 				D878AD071D980D420062D75A /* CVDisplay.swift in Sources */,
-				D83B5F821D955BE500E731DF /* MViewController.swift in Sources */,
 				D82223D71D89611300E60EB0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -945,6 +945,7 @@
 				A94DFC961D9B9E9B002AB0FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D82223E21D89611300E60EB0 /* Build configuration list for PBXNativeTarget "SwiftPlayer4macOS" */ = {
 			isa = XCConfigurationList;

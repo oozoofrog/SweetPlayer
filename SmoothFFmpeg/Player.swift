@@ -186,7 +186,6 @@ public class Player {
                     guard let data = frame.videoData(stream.time_base), false == self.quit else {
                         continue
                     }
-                    print(data.time)
                     self.videoQueue?.append(data: data)
                 case AVMEDIA_TYPE_AUDIO:
                     

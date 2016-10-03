@@ -47,3 +47,9 @@ fragment float4 movieFragment(VertexOut interpolated [[stage_in]],
     float4 rgb = yuv * convolution;
     return float4(rgb.rgb, 1);
 }
+
+kernel void convert(texture2d<float, access::read> in [[texture(0)]],
+                    texture2d<float, access::write> out [[texture(1)]],
+                    uint2 gid [[thread_position_in_grid]]) {
+    
+}

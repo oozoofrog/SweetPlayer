@@ -67,7 +67,7 @@ class MainController: NSViewController, NSOpenSavePanelDelegate {
     }
     
     func panel(_ sender: Any, validate url: URL) throws {
-        guard playerView.setup(path: url.absoluteString, progressHandle: { (player, progress) in
+        guard playerView.setup(path: url.path, progressHandle: { (player, progress) in
             self.progressView.doubleValue = progress
         }) else {
             return

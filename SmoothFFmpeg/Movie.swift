@@ -14,6 +14,10 @@ import AVFoundation
 public class Movie {
     
     let device: MTLDevice
+    let library: MTLLibrary
+    let pipelineState: MTLRenderPipelineState
+    let commandQueue: MTLCommandQueue
+    
     
     let vertices: [Float] = [-1, 1, 0, 0,
                              -1, -1, 0, 1,
@@ -22,12 +26,10 @@ public class Movie {
                              1, -1, 1, 1,
                              1, 1, 1, 0]
     
-
+    
     let vertexBuffer: MTLBuffer
     let convolutionBuffer: MTLBuffer
     let decreaseBuffer: MTLBuffer
-    let pipelineState: MTLRenderPipelineState
-    let commandQueue: MTLCommandQueue
     //let sample: MTLSamplerState
     
     fileprivate var videoRatio: CGSize
@@ -39,20 +41,19 @@ public class Movie {
     }
     
     var modelMatrix: float4x4
-    
     public init(device: MTLDevice, pixelFormat: MTLPixelFormat, colorMatrix: ColorMatrix, videoRatio: CGSize, screenRatio: CGSize) {
         self.device = device
         self.commandQueue = device.makeCommandQueue()
+        #if os(iOS)
+            self.library = device.newDefaultLibrary()!
+        #else
+            self.library = try! device.makeDefaultLibrary(bundle: Bundle(for: Player.self))
+        #endif
         vertexBuffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float>.size * vertices.count, options: [])
         
         convolutionBuffer = device.makeBuffer(bytes: colorMatrix.kernel, length: MemoryLayout<Float>.size * 16, options: [])
         decreaseBuffer = device.makeBuffer(bytes: ColorMatrix.yuvK, length: MemoryLayout<Float>.size * 4, options: [])
         let pipelineStateDesc = MTLRenderPipelineDescriptor()
-        #if os(iOS)
-        let library = device.newDefaultLibrary()!
-        #else
-        let library = try! device.makeDefaultLibrary(bundle: Bundle(for: Player.self))
-        #endif
         pipelineStateDesc.vertexFunction = library.makeFunction(name: "movieVertex")
         pipelineStateDesc.fragmentFunction = library.makeFunction(name: "movieFragment")
         pipelineStateDesc.colorAttachments[0].pixelFormat = pixelFormat
@@ -90,6 +91,11 @@ public class Movie {
         commandBuffer.commit()
     }
     
+    public func convert() {
+        guard let kernel: MTLFunction = self.library.makeFunction(name: "convert") else {
+            return
+        }
+    }
 }
 
 

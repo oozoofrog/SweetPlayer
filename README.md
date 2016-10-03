@@ -1,5 +1,18 @@
 # SweetPlayer 
 
+###Preparation for Development
+- [Homebrew](https://brew.sh) - install on console
+
+>$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+- [FFmpeg](https://ffmpeg.org) - install(+ openssl) after brew
+
+>$ brew install ffmpeg --with-openssl
+
+###2016.10.03
+- adding convert kernel to metal function.
+- has bug on change seeking for mkv, and may be another formats. 
+
 ###2016.10.01
 - create SmoothFFmpeg framework
 - add progress
